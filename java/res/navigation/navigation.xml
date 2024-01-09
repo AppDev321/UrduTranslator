@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/fragmentTranslate">
+    <fragment
+        android:id="@+id/fragmentTranslate"
+        android:name="com.dictonary.fragment.TranslateFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/dic_fragment_translator">
+       <!-- <argument
+            android:name="Type"
+            app:argType="com.wit.wittranslator.domain.model.TranslationModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_fragmentHome_to_conversationFragment"
+            app:destination="@id/conversationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentHome_to_textEnterBottomSheetDialog"
+            app:destination="@id/textEnterBottomSheetDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_fragmentHome_to_selectLanguageBottomSheetDialog"
+            app:destination="@id/selectLanguageBottomSheetDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentHome_to_favoritesFragment"
+            app:destination="@id/favoritesFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+
+        <dialog
+            android:id="@+id/textEnterBottomSheetDialog"
+            android:name="com.wit.wittranslator.presentation.ui.dialogs.TextEnterBottomSheet.TextEnterBottomSheet"
+            android:label="TextEnterBottomSheetDialog"
+            tools:layout="@layout/text_enter_bottom_sheet" />
+
+
+        <dialog
+            android:id="@+id/ratingExitBottomSheetDialog"
+            android:name="com.wit.wittranslator.presentation.ui.dialogs.dialogexitads.view.DialogExitWithAd"
+            android:label="ratingExitBottomSheetDialog"
+            tools:layout="@layout/dialogexitbottomsheet" />
+        <action
+            android:id="@+id/action_fragmentHome_to_zoomViewFragment"
+            app:destination="@id/zoomViewFragment" />-->
+    </fragment>
+</navigation>

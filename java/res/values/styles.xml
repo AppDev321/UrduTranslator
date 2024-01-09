@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <style name="AlertDialogBaseTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@color/alert_dialog_bg</item>
+        <item name="colorAccent">@color/dialog_box_text_and_control_color</item>
+        <item name="android:colorAccent">@color/dialog_box_text_and_control_color</item>
+        <item name="android:textColor">@color/dialog_box_text_and_control_color</item>
+        <item name="android:textColorPrimary">@color/dialog_box_text_and_control_color</item>
+        <item name="android:textColorAlertDialogListItem">@color/dialog_box_text_and_control_color
+        </item>
+        <item name="android:colorControlNormal">@color/dialog_box_text_and_control_color</item>
+        <item name="android:colorControlActivated">@color/dialog_box_text_and_control_color</item>
+        <item name="android:minWidth">100dp</item>
+        <item name="colorControlNormal">@color/dialog_box_text_and_control_color</item>
+        <item name="colorControlActivated">@color/dialog_box_text_and_control_color</item>
+        <item name="textColorAlertDialogListItem">@color/dialog_box_text_and_control_color</item>
+        <item name="buttonBarNegativeButtonStyle">@style/PositiveNegativeButtons</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveNegativeButtons</item>
+        <!--<item name="android:fontFamily">@font/regular</item>
+        <item name="fontFamily">@font/regular</item>-->
+    </style>
+
+    <style name="RadioButtonsTheme" parent="AlertDialogBaseTheme" />
+
+    <style name="styleMultiChoiceDialog" parent="AlertDialogBaseTheme" />
+
+    <style name="PositiveNegativeButtons" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dialog_box_text_and_control_color</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CustomDialogTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogThemeCustom" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="windowMinWidthMajor">0%</item>
+        <item name="windowMinWidthMinor">0%</item>
+    </style>
+
+
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
+    </style>
+
+
+   <!-- <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>-->
+
+    <style name="seekBarStyle" parent="@android:style/Widget.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:minHeight">8dip</item>
+        <item name="android:maxHeight">20dip</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+    </style>
+
+
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#000000</item>
+
+
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+
+    <style name="Smaller_Drawable">
+        <item name="android:textSize">20sp</item>
+        <item name="android:scaleX">0.8</item>
+        <item name="android:scaleY">0.8</item>
+    </style>
+    <!-- styles.xml -->
+
+
+    <style name="SelectableItemBackgroundBorder">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="SelectableItemBackground">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+
+    <style name="PopupMenu" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
+
+    <style name="WebViewProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorTextGrayLight</item>
+    </style>
+
+    <color name="colorTextGrayLight">#818181</color>
+
+    <style name="TabLayoutStyle1" parent="Base.Widget.Design.TabLayout">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="myPopupMenuTextAppearanceSmall" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Small">
+        <item name="android:textColor">#545656</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
+    <style name="myPopupMenuTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Large">
+        <item name="android:textColor">#545656</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+
+    <style name="RatingBar" parent="AppTheme">
+        <item name="colorControlNormal">@color/darkGray</item>
+        <item name="colorControlActivated">@color/primaryColor</item>
+    </style>
+
+    <style name="PauseDialog" parent="@android:style/Theme.Dialog">
+
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+
+    <!--<style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fadein</item>
+        <item name="android:windowExitAnimation">@anim/fadeout</item>
+    </style>-->
+
+
+    <!--<style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>-->
+
+    <!-- <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+         <item name="android:background">@drawable/rounded_corner</item>
+     </style>
+ -->
+    <style name="layoutStyle">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+    <style name="AppTheme.progress">
+        <item name="colorAccent">@color/primaryColor</item> <!-- Whatever color you want-->
+    </style>
+
+
+    <style name="CropActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColor</item>
+        <item name="colorAccent">@color/primaryColor</item>
+    </style>
+
+
+
+</resources>

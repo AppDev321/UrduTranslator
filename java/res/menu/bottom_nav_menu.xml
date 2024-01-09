@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/fragmentHome"
+        android:title="Translate"
+        android:icon="@drawable/ic_translator"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/conversationFragment"
+        android:title="Chat"
+        android:icon="@drawable/ic_chat_translator"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/dictionaryFragment"
+        android:title="Dictionary"
+        android:icon="@drawable/ic_dictionary_enable"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/LearnFragment"
+        android:title="Learn"
+        android:icon="@drawable/ic_learn"
+        app:showAsAction="ifRoom" />
+
+    <!--<item
+        app:showAsAction="ifRoom"
+
+        android:id="@+id/more"
+        android:title="More">
+        <menu>
+            <item
+                android:id="@+id/KeyboardFragment"
+                android:title="Keyboard"
+                android:icon="@drawable/ic_keyboard_dic"
+                />
+            <item
+                android:id="@+id/EditorFragment"
+                android:title="Editor"
+                android:icon="@drawable/ic_urdu_editor"
+                />
+        </menu>
+    </item>-->
+  <!--  <item
+        android:id="@+id/cameraFragment"
+        android:title="@string/title_camera"
+        android:icon="@drawable/ic_camera"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>-->
+
+    <item
+        android:id="@+id/moreFragment"
+        android:title="@string/title_more"
+        android:icon="@drawable/ic_more"
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
+
+
+</menu>

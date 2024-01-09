@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="an_error_occurred" translatable="false">An error occured</string>
+    <string name="ok" translatable="false">ok</string>
+    <string name="please_enter_description" translatable="false">Please enter description</string>
+    <string name="permission" translatable="false">Permission</string>
+    <string name="grant_permission_from_settings" translatable="false">You will be redirected to settings to grant permission</string>
+    <string name="open_settings" translatable="false">Open Settings</string>
+    <string name="error" translatable="false">Error</string>
+    <string name="close" translatable="false">close</string>
+    <string name="open" translatable="false">open</string>
+</resources>
