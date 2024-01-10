@@ -1,6 +1,7 @@
 package com.core.extensions
 
 import android.app.Activity
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -70,3 +71,11 @@ fun Context.sendShareIntent(text: String) {
 }
 
 fun Context.isActivityResultSuccess(resultCode: Int) = (resultCode == Activity.RESULT_OK)
+
+fun Context.copyTextToClipboard(textToCopy: String) {
+    val clipboardManager =
+        applicationContext.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+    val clipData = ClipData.newPlainText("text", textToCopy)
+    clipboardManager.setPrimaryClip(clipData)
+    applicationContext.showShortToast("Text copied to clipboard")
+}
