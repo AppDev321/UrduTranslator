@@ -81,6 +81,9 @@ android {
             res.srcDirs = ['java/res']
             java.srcDirs = ['common/src', 'java/src']
             manifest.srcFile 'java/AndroidManifest.xml'
+            assets {
+                srcDirs 'java/assets', 'src/main/assets'
+            }
         }
 
         androidTest {

@@ -8,6 +8,7 @@ import com.core.data.mapper.translate.TranslateMapper
 import com.core.data.model.translate.TranslateReq
 import com.core.data.model.translate.TranslateResponse
 import com.core.data.usecase.TranslateUseCase
+import com.core.database.repo.dictionary.DictionaryRepo
 import com.core.domain.callback.OptimizedCallbackWrapper
 import com.core.domain.remote.ApiErrorMessages
 import com.core.domain.remote.BaseError
@@ -16,14 +17,17 @@ import com.core.utils.AppLogger
 import com.core.utils.PreferenceManager
 import com.dictonary.navigator.TranslateNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TranslateViewModel @Inject constructor(
     private val translateUseCase: TranslateUseCase,
-    private val tranlateMapper: TranslateMapper
+    private val translateMapper: TranslateMapper,
+    private val dictionaryRepo: DictionaryRepo,
 ) :
     BaseViewModel<TranslateNavigator>() {
+
 
 
     fun handleSpeechText(text: String) {
@@ -54,9 +58,17 @@ class TranslateViewModel @Inject constructor(
         )
     }
 
+fun getData()
+{
+    viewModelScope.launch(ioDispatcher) {
+        val list = dictionaryRepo.getDictionaryDataList()
+        AppLogger.e(TAG,"${list.toString()}")
 
+    }
+}
 
     fun getTranslation(request:TranslateReq) {
+        getData()
         getNavigator()?.setProgressVisibility(View.VISIBLE)
         translateUseCase.execute(
             TranslateSubscriber(),
@@ -70,7 +82,7 @@ class TranslateViewModel @Inject constructor(
     inner class TranslateSubscriber :
         OptimizedCallbackWrapper<TranslateResponse>() {
         override fun onApiSuccess(response: TranslateResponse) {
-            getNavigator()?.onTranslatedTextReceived(tranlateMapper.mapFrom(response))
+            getNavigator()?.onTranslatedTextReceived(translateMapper.mapFrom(response))
             getNavigator()?.setProgressVisibility(View.GONE)
         }
 
