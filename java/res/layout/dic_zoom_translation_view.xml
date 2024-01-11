@@ -1,89 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/hTranslateMain"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:layout_margin="10dp"
-    android:elevation="5dp"
-    app:cardCornerRadius="5dp">
+    android:layout_height="wrap_content"
+    >
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/hTranslateMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/rounded_gray"
+        app:layout_constraintTop_toTopOf="parent">
 
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hHeading"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="250dp"
             android:layout_margin="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <TextView
-                android:id="@+id/txtFromLang"
+                android:id="@+id/hFromLang"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:text="--"
+                android:text="English "
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/hGuide"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtWord"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="--"
-                android:textSize="16sp"
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/hScrollableFrom"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/hGuide"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hFromLang">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/hGuide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@id/hClose"
-                app:layout_constraintGuide_begin="305dp" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/hWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:ellipsize="end"
+                    android:padding="5dp"
+                    android:scrollHorizontally="true"
+                    android:text="Wikipedia is a free online Wikipedia is a free online"
+                    android:textSize="18sp" />
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/hClose"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_margin="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_close" />
+            </androidx.core.widget.NestedScrollView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/hCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hHeading" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hCenter"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="250dp"
+            android:layout_margin="4sp"
             android:padding="14dp"
             app:layout_constraintBottom_toTopOf="@+id/hEnd"
-            app:layout_constraintTop_toBottomOf="@id/hHeading">
+            app:layout_constraintTop_toBottomOf="@+id/guideline">
 
 
             <TextView
-                android:id="@+id/txtToLang"
+                android:id="@+id/hToLang"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -100,25 +113,29 @@
                 android:id="@+id/hScrollable"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtToLang"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/hToLang">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txtTranslation"
+                    android:id="@+id/hMeaning"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
                     android:cursorVisible="false"
-                    android:scrollHorizontally="true"
-                    android:text="--"
-                    android:textColor="@color/primaryColor" />
+                    android:editable="false"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="18sp"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.core.widget.NestedScrollView>
 
+
             <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/txtLoadingBar"
+                android:id="@+id/hProgressLoading"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -139,38 +156,39 @@
             android:id="@+id/hEnd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent">
 
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgFav"
+                android:id="@+id/hFavIconCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/hZoom"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_fav_uncheck" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/hZoom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/hCopy"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_zoom_in_view" />
+                app:srcCompat="@drawable/ic_fav" />
 
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/hFavIconUnCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/hCopy"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_fav_uncheck" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/hCopy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/hSpeakerIcon"
+                app:layout_constraintEnd_toStartOf="@id/hSpeakerIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_copy" />
 
@@ -188,4 +206,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

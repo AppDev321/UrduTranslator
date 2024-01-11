@@ -15,6 +15,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicFragmentTranslatorBinding
 import com.core.base.BaseFragment
 import com.core.data.model.translate.TranslateReq
@@ -59,13 +61,16 @@ class TranslateFragment :
             translatedView.hide()
             hLeftLanguage.text = preferenceManager.getPrefFromLangText()
             hRightLanguage.text = preferenceManager.getPrefToLangText()
+btnHistory.setOnClickListener {
+    findNavController().navigate(R.id.action_fragmentHome_to_historyFragment)
+}
 
             btnMic.setOnClickListener {
                 startMicReading()
             }
 
             hSplitLanguages.setOnClickListener {
-                translateView.transformLanguage(preferenceManager)
+                translateView.transformLanguage()
             }
 
             edTranslate.addTextChangedListener(TextQueryListenerManager(

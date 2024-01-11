@@ -1,4 +1,3 @@
-
 package com.core.database.entity
 
 import androidx.room.ColumnInfo
@@ -8,10 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "a_Group")
 data class DictionaryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @ColumnInfo("id")
+    val id: Int? = 0,
     @ColumnInfo("word")
-    val word: Int,
+    val word: String? = "",
     @ColumnInfo("meaning")
-    val meaning: String,
+    val meaning: String? = "",
 )
 

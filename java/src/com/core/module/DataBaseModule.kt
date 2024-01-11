@@ -1,7 +1,6 @@
 package com.core.module
 
 import android.content.Context
-import com.core.BaseApplication
 import com.core.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,5 +20,9 @@ object DataBaseModule {
     @Singleton
     @Provides
     fun provideDictionaryDAO(database: AppDatabase) = database.dictionaryDao()
+
+    @Singleton
+    @Provides
+    fun provideHistoryDAO(database: AppDatabase) = database.historyDao()
 
 }

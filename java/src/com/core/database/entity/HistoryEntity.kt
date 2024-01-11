@@ -1,14 +1,31 @@
 package com.core.database.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-@Entity(tableName = "history")
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+@Entity(tableName = "tbl_records")
 data class HistoryEntity(
     @PrimaryKey(autoGenerate = true)
-    val _id: Long = 0,
-    val word_id: Int,
-    val urdu_word: String,
-    val eng_word: String,
-    val is_urdu: Int
-)
+    @ColumnInfo(name = "rowid")
+    var id: Long? = 0,
+
+    @ColumnInfo(name = "urdu_word")
+    var translatedText: String? = "",
+
+    @ColumnInfo(name = "eng_word")
+    var textForTranslation: String? = "",
+
+    @ColumnInfo(name = "is_urdu")
+    var isUrdu: Boolean? = false,
+
+    @ColumnInfo(name = "is_favorite")
+    var isFav: Boolean? = false,
+
+    @ColumnInfo(name = "is_history")
+    var isHistory: Boolean? = false
+
+): Parcelable

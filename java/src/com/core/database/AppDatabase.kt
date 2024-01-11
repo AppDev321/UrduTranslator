@@ -1,21 +1,18 @@
 package com.core.database
 
 import android.content.Context
-import android.graphics.Typeface.createFromFile
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.core.database.convertors.DateConvertors
 import com.core.database.dao.DictionaryDao
+import com.core.database.dao.HistoryDao
 import com.core.database.entity.DictionaryEntity
-import com.core.database.entity.FavouriteEntity
 import com.core.database.entity.HistoryEntity
-import com.core.utils.AppLogger
-import java.io.File
 
 @Database(
-    entities = [HistoryEntity::class,FavouriteEntity::class,DictionaryEntity::class],
+    entities = [HistoryEntity::class,DictionaryEntity::class],
     version = DatabaseMigrations.DB_VERSION,
     exportSchema = false
 )
@@ -23,7 +20,7 @@ import java.io.File
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun dictionaryDao(): DictionaryDao
-
+    abstract fun historyDao(): HistoryDao
     companion object {
 
         private const val dbName = "a_dictionary"
