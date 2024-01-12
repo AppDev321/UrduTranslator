@@ -1,7 +1,6 @@
-package com.dictonary.activity
+package com.dictionary.activity
 
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import com.android.inputmethod.latin.databinding.ActivitySplashScreenBinding
 import com.core.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint

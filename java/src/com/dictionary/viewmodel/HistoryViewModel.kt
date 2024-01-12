@@ -1,15 +1,18 @@
-package com.dictonary.viewmodel
+package com.dictionary.viewmodel
 
+import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.core.base.BaseViewModel
 import com.core.database.entity.HistoryEntity
 import com.core.database.repo.history.HistoryRepo
 import com.core.utils.PreferenceManager
-import com.dictonary.navigator.HistoryNavigator
+import com.dictionary.navigator.HistoryNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,13 +26,22 @@ class HistoryViewModel @Inject constructor(
 
 
     @Synchronized
-    fun getHistoryDataList() {
+    fun getDataList(isFav: Boolean) {
+        getNavigator()?.setProgressVisibility(View.VISIBLE)
         viewModelScope.launch(ioDispatcher) {
-            val getDataList = historyRepo.getHistoryDataList()
-            _historyDataList.emit( getDataList)
+            val getDataList = async {
+                if (isFav)
+                    historyRepo.getFavouriteDataList()
+                else
+                    historyRepo.getHistoryDataList()
+            }.await()
+            _historyDataList.emit(getDataList)
+            withContext(mainDispatcher)
+            {
+                getNavigator()?.setProgressVisibility(View.GONE)
+            }
         }
     }
-
 
 
 }

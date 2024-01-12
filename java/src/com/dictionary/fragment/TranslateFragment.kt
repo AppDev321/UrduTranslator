@@ -1,4 +1,4 @@
-package com.dictonary.fragment
+package com.dictionary.fragment
 
 import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
@@ -23,11 +23,13 @@ import com.core.data.model.translate.TranslateReq
 import com.core.extensions.copyTextToClipboard
 import com.core.extensions.empty
 import com.core.extensions.hide
+import com.core.extensions.hideKeyboard
 import com.core.extensions.show
 import com.core.utils.setOnSingleClickListener
-import com.dictonary.navigator.TranslateNavigator
-import com.dictonary.utils.TextQueryListenerManager
-import com.dictonary.viewmodel.TranslateViewModel
+import com.dictionary.activity.DetailActivity
+import com.dictionary.navigator.TranslateNavigator
+import com.dictionary.utils.TextQueryListenerManager
+import com.dictionary.viewmodel.TranslateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.net.URLEncoder
@@ -61,15 +63,20 @@ class TranslateFragment :
             translatedView.hide()
             hLeftLanguage.text = preferenceManager.getPrefFromLangText()
             hRightLanguage.text = preferenceManager.getPrefToLangText()
-btnHistory.setOnClickListener {
-    findNavController().navigate(R.id.action_fragmentHome_to_historyFragment)
-}
+            btnHistory.setOnClickListener {
+              //  val bundle = bundleOf(HistoryFragment.isFav to false)
+             //   findNavController().navigate(R.id.action_fragmentHome_to_historyFragment,bundle)
+            }
 
-            btnMic.setOnClickListener {
+            btnFavourite.setOnSingleClickListener {
+             //   val bundle = bundleOf(HistoryFragment.isFav to true)
+              //  findNavController().navigate(R.id.action_fragmentHome_to_historyFragment,bundle)
+            }
+            btnMic.setOnSingleClickListener {
                 startMicReading()
             }
 
-            hSplitLanguages.setOnClickListener {
+            hSplitLanguages.setOnSingleClickListener {
                 translateView.transformLanguage()
             }
 
@@ -77,13 +84,19 @@ btnHistory.setOnClickListener {
                 activity?.lifecycle
             ) { queryText ->
                 queryText?.let {
-                   btnTranslate.isEnabled = it.isNotEmpty()
+                    btnTranslate.isEnabled = it.isNotEmpty()
+                    if (it.isEmpty()) btnDelete.hide() else btnDelete.show()
                 }
             })
 
+            btnDelete.setOnSingleClickListener {
+                edTranslate.text.clear()
+            }
+
             btnTranslate.setOnSingleClickListener {
+                activity?.hideKeyboard()
                 val word = edTranslate.text.toString().trim()
-                if(word.isNotEmpty()) {
+                if (word.isNotEmpty()) {
                     translatedView.show()
                     hTranslationLayout.txtTranslation.text = String.empty
                     hTranslationLayout.txtWord.text = word
@@ -95,23 +108,45 @@ btnHistory.setOnClickListener {
                         word
                     )
                     translateView.getTranslation(req)
-                }
-                else
-                {
+                } else {
                     showToast("Please type some text for translate")
                 }
             }
 
-            hTranslationLayout.hClose.setOnClickListener {
+            hTranslationLayout.hClose.setOnSingleClickListener {
                 translatedView.hide()
             }
-            hTranslationLayout.hCopy.setOnClickListener{
-                context?.copyTextToClipboard(hTranslationLayout.txtTranslation.text.toString())
-            }
-            hTranslationLayout.hSpeakerIcon.setOnClickListener{
-                mTextToSpeech?.speak(hTranslationLayout.txtTranslation.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
 
+            hTranslationLayout.commonActionViews.apply {
+                btnCopy.setOnSingleClickListener {
+                    context?.copyTextToClipboard(hTranslationLayout.txtTranslation.text.toString())
+                }
+                btnSpeaker.setOnSingleClickListener {
+                    mTextToSpeech?.speak(
+                        hTranslationLayout.txtTranslation.text.toString(),
+                        TextToSpeech.QUEUE_FLUSH,
+                        null,
+                        null
+                    )
+                }
+                btnZoom.setOnSingleClickListener{
+                    /*translateView.getLastRecord{
+                        val bundle = Bundle()
+                        bundle.putSerializable(ZoomFragment.ARG_ZOOM, it)
+                        view?.findNavController()
+                            ?.navigate(R.id.action_fragmentHome_to_zoomViewFragment, bundle)
+                    }*/
+
+                    val bundle = Bundle()
+                    bundle.putInt(
+                        DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.historyViewFragment
+                    )
+                    bundle.putBoolean(DetailActivity.SET_FAVOURITE_VIEW_TYPE, false)
+                    findNavController().navigate(R.id.action_fragmentHome_to_detailScreen, bundle)
+                   // findNavController().navigate(R.id.detail_activity)
+                }
             }
+
         }
 
 
@@ -169,11 +204,11 @@ btnHistory.setOnClickListener {
     }
 
     override fun onTranslatedTextReceived(text: String) {
-            if (text.isNotEmpty()) {
-                viewDataBinding.hTranslationLayout.txtTranslation.text = text
-            } else {
-                showToast("Translation not found. Try again later")
-            }
+        if (text.isNotEmpty()) {
+            viewDataBinding.hTranslationLayout.txtTranslation.text = text
+        } else {
+            showToast("Translation not found. Try again later")
+        }
     }
 
     private fun hInitializeMedia(locale: Locale?, languageCode: String?, sentence: String?) {
@@ -252,7 +287,7 @@ btnHistory.setOnClickListener {
     private fun getAudio(sentence: String, lang: String) {
         try {
 
-            var url: String =""
+            var url: String = ""
             val encodedData = URLEncoder.encode(sentence, "UTF-8")
             url = url.replace("**", lang)
             url = url.replace("##", encodedData)

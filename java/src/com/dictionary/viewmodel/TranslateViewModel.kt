@@ -1,4 +1,4 @@
-package com.dictonary.viewmodel
+package com.dictionary.viewmodel
 
 import android.view.View
 import androidx.lifecycle.viewModelScope
@@ -17,9 +17,11 @@ import com.core.domain.remote.BaseError
 import com.core.extensions.TAG
 import com.core.utils.AppLogger
 import com.core.utils.PreferenceManager
-import com.dictonary.navigator.TranslateNavigator
+import com.dictionary.navigator.TranslateNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -67,11 +69,12 @@ class TranslateViewModel @Inject constructor(
         )
     }
 
-    fun getData() {
+    fun getLastRecord(callback :(HistoryEntity) -> Unit) {
         viewModelScope.launch(ioDispatcher) {
-            val list = dictionaryRepo.getDictionaryDataList()
-            AppLogger.e(TAG, "${list.toString()}")
-
+            val data = async {  historyRepo.getLastRecord()}.await()
+            withContext(mainDispatcher) {
+                callback.invoke(data)
+            }
         }
     }
 

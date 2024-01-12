@@ -6,7 +6,7 @@
     app:startDestination="@+id/fragmentTranslate">
     <fragment
         android:id="@+id/fragmentTranslate"
-        android:name="com.dictonary.fragment.TranslateFragment"
+        android:name="com.dictionary.fragment.TranslateFragment"
         android:label="fragment_home"
         tools:layout="@layout/dic_fragment_translator">
        <!-- <argument
@@ -58,53 +58,27 @@
             android:label="ratingExitBottomSheetDialog"
             tools:layout="@layout/dialogexitbottomsheet" />
         -->
-        <action
-            android:id="@+id/action_fragmentHome_to_zoomViewFragment"
-            app:destination="@id/zoomViewFragment" />
 
         <action
-            android:id="@+id/action_fragmentHome_to_historyFragment"
-            app:destination="@id/historyViewFragment"
+            android:id="@+id/action_fragmentHome_to_zoomViewFragment"
+            app:destination="@id/detail_activity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_fragmentHome_to_detailScreen"
+            app:destination="@id/detail_activity"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <activity
+        android:id="@+id/detail_activity"
+        android:name="com.dictionary.activity.DetailActivity"
+        tools:layout="@layout/dic_detail_activity" />
 
-
-    <fragment
-        android:id="@+id/zoomViewFragment"
-        android:name="com.dictonary.fragment.ZoomFragment"
-        android:label="fragment_zoom_view"
-        tools:layout="@layout/dic_zoom_translation_view" >
-
-        <argument
-            android:name="Type"
-            app:argType="com.core.database.entity.HistoryEntity"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <action
-            android:id="@+id/action_zoomViewFragment_to_fragmentHome"
-            app:destination="@id/fragmentHome"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/historyViewFragment"
-        android:name="com.dictonary.fragment.HistoryFragment"
-        tools:layout="@layout/dic_history_fragment" >
-        <action
-            android:id="@+id/action_HistoryViewFragment_to_fragmentHome"
-            app:destination="@id/fragmentHome"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-    </fragment>
 
 </navigation>

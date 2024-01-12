@@ -1,4 +1,4 @@
-package com.dictonary.navigator
+package com.dictionary.navigator
 
 import com.core.interfaces.BaseNavigator
 

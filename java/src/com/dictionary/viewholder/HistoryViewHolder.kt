@@ -1,9 +1,9 @@
-package com.dictonary.viewholder
+package com.dictionary.viewholder
 
 import com.android.inputmethod.latin.databinding.DicItemHistoryBinding
 import com.core.base.BaseViewHolder
 import com.core.database.entity.HistoryEntity
-import com.dictonary.model.HistoryClickEvent
+import com.dictionary.model.HistoryClickEvent
 
 class HistoryViewHolder(
     private var item: DicItemHistoryBinding,

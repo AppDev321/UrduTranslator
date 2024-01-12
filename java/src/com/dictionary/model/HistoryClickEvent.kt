@@ -1,4 +1,4 @@
-package com.dictonary.model
+package com.dictionary.model
 
 import com.core.database.entity.HistoryEntity
 

@@ -1,4 +1,4 @@
-package com.dictonary.utils
+package com.dictionary.utils
 
 import android.text.Editable
 import android.text.TextWatcher

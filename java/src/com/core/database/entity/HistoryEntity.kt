@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
-@Parcelize
 @Entity(tableName = "tbl_records")
 data class HistoryEntity(
     @PrimaryKey(autoGenerate = true)
@@ -28,4 +28,4 @@ data class HistoryEntity(
     @ColumnInfo(name = "is_history")
     var isHistory: Boolean? = false
 
-): Parcelable
+): Serializable

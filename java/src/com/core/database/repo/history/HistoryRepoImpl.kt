@@ -13,6 +13,10 @@ class HistoryRepoImpl @Inject constructor(
         return historyDao.getHistoryList()
     }
 
+    override suspend fun getFavouriteDataList(): List<HistoryEntity> {
+        return historyDao.getFavouriteList()
+    }
+
     override suspend fun insertHistoryData(entity: HistoryEntity) {
         historyDao.insertHistory(entity)
     }
@@ -22,6 +26,11 @@ class HistoryRepoImpl @Inject constructor(
     }
 
     override suspend fun getMaxRowID(): Long {
-        return historyDao.getMaxRowId() + 1
+        val id = historyDao.getMaxRowId()?:0
+        return  id + 1
+    }
+
+    override suspend fun getLastRecord(): HistoryEntity {
+        return historyDao.getLatestRecord()
     }
 }

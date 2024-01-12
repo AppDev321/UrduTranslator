@@ -3,6 +3,7 @@ package com.core.utils
 import android.Manifest
 import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,6 +12,8 @@ import android.graphics.Matrix
 import android.graphics.Paint
 import android.media.ExifInterface
 import android.os.Build
+import android.os.Bundle
+import android.os.Parcelable
 import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
@@ -29,8 +32,10 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.Serializable
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.ArrayList
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -73,6 +78,27 @@ object Utils {
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 
 
+    inline fun <reified T : Parcelable> Bundle.getParcelableArrayListCompat(key: String): ArrayList<T>? =
+        when {
+            Utils.androidTIRAMISUAndAbove -> getParcelableArrayList(key, T::class.java)
+            else -> @Suppress("DEPRECATION") getParcelableArrayList(key)
+        }
+
+    inline fun <reified T : Parcelable> Intent.getParcelableArrayListExtraCompat(key: String): ArrayList<T>? =
+        when {
+            Utils.androidTIRAMISUAndAbove -> getParcelableArrayListExtra(key, T::class.java)
+            else -> @Suppress("DEPRECATION") getParcelableArrayListExtra(key)
+        }
+
+    inline fun <reified T : Serializable> Bundle.serializable(key: String): T? = when {
+        Utils.androidTIRAMISUAndAbove -> getSerializable(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getSerializable(key) as? T
+    }
+
+    inline fun <reified T : Serializable> Intent.serializable(key: String): T? = when {
+        Utils.androidTIRAMISUAndAbove -> getSerializableExtra(key, T::class.java)
+        else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
+    }
     fun compressImage(filePath: String?): File? {
         try {
             var scaledBitmap: Bitmap? = null

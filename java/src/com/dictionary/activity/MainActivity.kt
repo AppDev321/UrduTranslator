@@ -1,4 +1,4 @@
-package com.dictonary.activity
+package com.dictionary.activity
 
 import com.android.inputmethod.latin.databinding.DicActivityMainBinding
 import com.core.base.BaseActivity
