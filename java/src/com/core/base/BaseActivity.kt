@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.core.BaseApplication
 import com.core.interfaces.NetworkInterface
-import com.core.service.socket.SocketManager
 import com.core.utils.Inflate
-import javax.inject.Inject
 
 abstract class BaseActivity<VB : ViewBinding>(private val inflate: Inflate<VB>) :  AppCompatActivity(),
     NetworkInterface {

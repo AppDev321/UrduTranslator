@@ -9,7 +9,6 @@ import com.core.data.model.translate.TranslateReq
 import com.core.data.model.translate.TranslateResponse
 import com.core.data.usecase.TranslateUseCase
 import com.core.database.entity.HistoryEntity
-import com.core.database.repo.dictionary.DictionaryRepo
 import com.core.database.repo.history.HistoryRepo
 import com.core.domain.callback.OptimizedCallbackWrapper
 import com.core.domain.remote.ApiErrorMessages
@@ -28,7 +27,6 @@ import javax.inject.Inject
 class TranslateViewModel @Inject constructor(
     private val translateUseCase: TranslateUseCase,
     private val translateMapper: TranslateMapper,
-    private val dictionaryRepo: DictionaryRepo,
     private val historyRepo: HistoryRepo,
     private val preferenceManager: PreferenceManager
 ) :

@@ -43,5 +43,16 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
+    fun performFavAction(item:HistoryEntity)
+    {
+        viewModelScope.launch(ioDispatcher) {
+            historyRepo.updateFav(!item.isFav!!,item.id!!.toInt())
+            item.isFav = !item.isFav!!
+            withContext(mainDispatcher){
+                getNavigator()?.favouriteItemUpdated(item)
+            }
+        }
+    }
+
 
 }

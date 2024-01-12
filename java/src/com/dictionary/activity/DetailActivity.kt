@@ -10,7 +10,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicDetailActivityBinding
 import com.core.base.BaseActivity
+import com.core.database.entity.DictionaryEntity
+import com.core.database.entity.HistoryEntity
+import com.core.utils.Utils.serializable
+import com.dictionary.fragment.DictionaryDetailFragment
 import com.dictionary.fragment.HistoryFragment
+import com.dictionary.fragment.ZoomFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,6 +29,7 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
     companion object {
         const val DEFAULT_NAV_HOST_KEY = "nav_host_id"
         const val SET_FAVOURITE_VIEW_TYPE = "view_type"
+        const val SET_ENTITY_MODEL = "entity_model"
 
     }
 
@@ -48,14 +54,24 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
     private fun updateNavigationDestination(intent: Intent, fromOnCreate: Boolean = true) {
         val startDestinationID = when (intent.getIntExtra(DEFAULT_NAV_HOST_KEY, 0)) {
             R.id.historyViewFragment -> {
-                R.id.historyViewFragment
                 val isFavouriteView = intent.extras?.getBoolean(SET_FAVOURITE_VIEW_TYPE)
                 val argument = NavArgument.Builder().setDefaultValue(isFavouriteView).build()
                 navGraph.addArgument(HistoryFragment.isFav, argument)
                 R.id.historyViewFragment
             }
+            R.id.action_dic_to_detail_dic -> {
+                val dictionaryEntity = intent.extras?.serializable(SET_ENTITY_MODEL) as DictionaryEntity?
+                val argument = NavArgument.Builder().setDefaultValue(dictionaryEntity).build()
+                navGraph.addArgument(DictionaryDetailFragment.dictionaryEntityArgs, argument)
+                R.id.dictionaryDetailViewFragment
+            }
+            else -> {
+                val historyEntity = intent.extras?.serializable(SET_ENTITY_MODEL) as HistoryEntity?
+                val argument = NavArgument.Builder().setDefaultValue(historyEntity).build()
+                navGraph.addArgument(ZoomFragment.ARG_ZOOM, argument)
+                R.id.zoomViewFragment
+            }
 
-            else -> R.id.zoomViewFragment
         }
 
         if (fromOnCreate) {
@@ -67,6 +83,13 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
     }
 
     override fun initUserInterface() {
-
+        setSupportActionBar(viewDataBinding.toolbar)
+        viewDataBinding.toolbar.apply {
+            setNavigationOnClickListener {
+                onBackPressed()
+            }
+        }
     }
+
+
 }

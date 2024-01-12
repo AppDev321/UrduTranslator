@@ -3,6 +3,7 @@ package com.core.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "a_Group")
 data class DictionaryEntity(
@@ -12,6 +13,6 @@ data class DictionaryEntity(
     @ColumnInfo("word")
     val word: String? = "",
     @ColumnInfo("meaning")
-    val meaning: String? = "",
-)
+    var meaning: String? = "",
+):Serializable
 

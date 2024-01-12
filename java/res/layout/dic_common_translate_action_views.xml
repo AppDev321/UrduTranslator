@@ -11,25 +11,25 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnFav"
+            android:id="@+id/btnCommonFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnZoom"
+            app:layout_constraintEnd_toStartOf="@id/btnCommonZoom"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_fav_uncheck"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnZoom"
+            android:id="@+id/btnCommonZoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnCopy"
+            app:layout_constraintEnd_toStartOf="@id/btnCommonCopy"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_zoom_in_view"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -37,19 +37,19 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnCopy"
+            android:id="@+id/btnCommonCopy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnSpeaker"
+            app:layout_constraintEnd_toStartOf="@+id/btnCommonSpeaker"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_copy"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnSpeaker"
+            android:id="@+id/btnCommonSpeaker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"

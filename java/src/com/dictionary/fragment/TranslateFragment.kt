@@ -64,13 +64,22 @@ class TranslateFragment :
             hLeftLanguage.text = preferenceManager.getPrefFromLangText()
             hRightLanguage.text = preferenceManager.getPrefToLangText()
             btnHistory.setOnClickListener {
-              //  val bundle = bundleOf(HistoryFragment.isFav to false)
-             //   findNavController().navigate(R.id.action_fragmentHome_to_historyFragment,bundle)
+                val bundle = Bundle()
+                bundle.putInt(
+                    DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.historyViewFragment
+                )
+                bundle.putBoolean(DetailActivity.SET_FAVOURITE_VIEW_TYPE, false)
+                findNavController().navigate(R.id.action_fragmentHome_to_detailScreen, bundle)
             }
 
             btnFavourite.setOnSingleClickListener {
-             //   val bundle = bundleOf(HistoryFragment.isFav to true)
-              //  findNavController().navigate(R.id.action_fragmentHome_to_historyFragment,bundle)
+                val bundle = Bundle()
+                bundle.putInt(
+                    DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.historyViewFragment
+                )
+                bundle.putBoolean(DetailActivity.SET_FAVOURITE_VIEW_TYPE, true)
+                findNavController().navigate(R.id.action_fragmentHome_to_detailScreen, bundle)
+
             }
             btnMic.setOnSingleClickListener {
                 startMicReading()
@@ -121,7 +130,7 @@ class TranslateFragment :
                 btnCopy.setOnSingleClickListener {
                     context?.copyTextToClipboard(hTranslationLayout.txtTranslation.text.toString())
                 }
-                btnSpeaker.setOnSingleClickListener {
+                btnCommonSpeaker.setOnSingleClickListener {
                     mTextToSpeech?.speak(
                         hTranslationLayout.txtTranslation.text.toString(),
                         TextToSpeech.QUEUE_FLUSH,
@@ -129,21 +138,14 @@ class TranslateFragment :
                         null
                     )
                 }
-                btnZoom.setOnSingleClickListener{
-                    /*translateView.getLastRecord{
+                btnCommonZoom.setOnSingleClickListener{
+                   translateView.getLastRecord{
                         val bundle = Bundle()
-                        bundle.putSerializable(ZoomFragment.ARG_ZOOM, it)
-                        view?.findNavController()
-                            ?.navigate(R.id.action_fragmentHome_to_zoomViewFragment, bundle)
-                    }*/
+                        bundle.putSerializable(DetailActivity.SET_ENTITY_MODEL, it)
+                        bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.zoomViewFragment)
+                        findNavController().navigate(R.id.action_fragmentHome_to_detailScreen, bundle)
 
-                    val bundle = Bundle()
-                    bundle.putInt(
-                        DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.historyViewFragment
-                    )
-                    bundle.putBoolean(DetailActivity.SET_FAVOURITE_VIEW_TYPE, false)
-                    findNavController().navigate(R.id.action_fragmentHome_to_detailScreen, bundle)
-                   // findNavController().navigate(R.id.detail_activity)
+                   }
                 }
             }
 

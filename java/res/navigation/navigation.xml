@@ -59,6 +59,16 @@
             tools:layout="@layout/dialogexitbottomsheet" />
         -->
 
+
+        <action
+            android:id="@+id/action_fragmentHome_to_conversationFragment"
+            app:destination="@id/dictionaryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+
         <action
             android:id="@+id/action_fragmentHome_to_zoomViewFragment"
             app:destination="@id/detail_activity"
@@ -74,11 +84,39 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+
+
+        <action
+            android:id="@+id/action_dictionary_to_home"
+            app:destination="@id/fragmentTranslate"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/fragmentTranslate"/>
     </fragment>
+
+
+
     <activity
         android:id="@+id/detail_activity"
         android:name="com.dictionary.activity.DetailActivity"
         tools:layout="@layout/dic_detail_activity" />
 
+
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="com.dictionary.fragment.DictionaryFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/dic_dictionary_fragment">
+
+        <action
+            android:id="@+id/action_dic_to_detail_dic"
+            app:destination="@id/detail_activity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
 </navigation>

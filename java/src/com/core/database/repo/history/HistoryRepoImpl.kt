@@ -33,4 +33,8 @@ class HistoryRepoImpl @Inject constructor(
     override suspend fun getLastRecord(): HistoryEntity {
         return historyDao.getLatestRecord()
     }
+
+    override suspend fun updateFav(isFav: Boolean, rowID: Int): Int {
+        return historyDao.updateFav(isFav, rowID)
+    }
 }
