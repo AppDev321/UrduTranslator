@@ -29,10 +29,9 @@ class TranslateViewModel @Inject constructor(
     private val translateMapper: TranslateMapper,
     private val historyRepo: HistoryRepo,
     private val preferenceManager: PreferenceManager
-) :
-    BaseViewModel<TranslateNavigator>() {
+) : BaseViewModel<TranslateNavigator>() {
 
-
+     var isRightSideConversationMicOpen = false
     fun handleSpeechText(text: String) {
         getNavigator()?.onTextSpeechReceived(text)
     }
@@ -67,19 +66,19 @@ class TranslateViewModel @Inject constructor(
         )
     }
 
-    fun getLastRecord(callback :(HistoryEntity) -> Unit) {
+    fun getLastRecord(callback: (HistoryEntity) -> Unit) {
         viewModelScope.launch(ioDispatcher) {
-            val data = async {  historyRepo.getLastRecord()}.await()
+            val data = async { historyRepo.getLastRecord() }.await()
             withContext(mainDispatcher) {
                 callback.invoke(data)
             }
         }
     }
 
-    fun getTranslation(request: TranslateReq) {
+    fun getTranslation(request: TranslateReq, isConversationData: Boolean = false) {
         getNavigator()?.setProgressVisibility(View.VISIBLE)
         translateUseCase.execute(
-            TranslateSubscriber(request),
+            TranslateSubscriber(request, isConversationData),
             TranslateUseCase.Params.create(request),
             coroutineScope = viewModelScope,
             dispatcher = ioDispatcher
@@ -87,26 +86,46 @@ class TranslateViewModel @Inject constructor(
     }
 
 
-    inner class TranslateSubscriber constructor(private val request: TranslateReq) :
+    inner class TranslateSubscriber constructor(
+        private val request: TranslateReq,
+        private val isConversationData: Boolean = false
+    ) :
         OptimizedCallbackWrapper<TranslateResponse>() {
 
         override fun onApiSuccess(response: TranslateResponse) {
             val translatedText = translateMapper.mapFrom(response)
-
             viewModelScope.launch {
                 val historyEntity = HistoryEntity().apply {
                     val langCode = preferenceManager.getPrefToLangCode()
                     id = historyRepo.getMaxRowID()
-                    this.translatedText = if (langCode == "ur") translatedText else request.text
-                    textForTranslation = if (langCode == "en") translatedText else request.text
-                    isUrdu = langCode != "en"
+                    this.translatedText = translatedText
+                    textForTranslation = request.text
+                    fromCode = preferenceManager.getPrefFromLangCode()
+                    toCode = langCode
+                    fromLang = preferenceManager.getPrefFromLangText()
+                    toLang = preferenceManager.getPrefToLangText()
                 }
-                historyRepo.insertHistoryData(historyEntity)
+                if (!isConversationData) {
+                    historyRepo.insertHistoryData(historyEntity)
+                }
+                else
+                {
+                    if(isRightSideConversationMicOpen) {
+                        historyEntity.toLang = preferenceManager.getPrefFromLangText()
+                        historyEntity.toCode = preferenceManager.getPrefFromLangCode()
+                    }
+                    else
+                    {
+                        historyEntity.toLang = preferenceManager.getPrefToLangText()
+                        historyEntity.toCode = preferenceManager.getPrefToLangCode()
+                    }
+                }
+                withContext(mainDispatcher)
+                {
+                    getNavigator()?.onTranslatedTextReceived(historyEntity)
+                    getNavigator()?.setProgressVisibility(View.GONE)
+                }
             }
-
-            getNavigator()?.onTranslatedTextReceived(translatedText)
-            getNavigator()?.setProgressVisibility(View.GONE)
-
         }
 
         override fun onApiError(error: BaseError) {

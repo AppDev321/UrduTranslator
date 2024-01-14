@@ -1,7 +1,6 @@
 package com.dictionary.activity
 
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicActivityMainBinding
@@ -32,15 +31,6 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
             supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.historyViewFragment,
-            R.id.dictionaryFragment,
-            R.id.historyViewFragment,
-            R.id.historyViewFragment,
-            R.id.historyViewFragment,
-      ))
-
-      //  setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 

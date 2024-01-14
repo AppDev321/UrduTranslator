@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.android.inputmethod.latin.databinding.DicItemHistoryBinding
 import com.core.base.BaseRecyclerAdapter
 import com.core.database.entity.HistoryEntity
-import com.dictionary.model.HistoryClickEvent
+import com.dictionary.events.HistoryClickEvent
 import com.dictionary.viewholder.HistoryViewHolder
 
 class HistoryAdapter(

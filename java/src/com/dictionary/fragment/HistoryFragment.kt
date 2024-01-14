@@ -16,11 +16,12 @@ import com.core.extensions.copyTextToClipboard
 import com.core.extensions.hide
 import com.core.extensions.show
 import com.dictionary.adapter.HistoryAdapter
-import com.dictionary.model.HistoryClickEvent
+import com.dictionary.events.HistoryClickEvent
 import com.dictionary.navigator.HistoryNavigator
 import com.dictionary.viewmodel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -49,7 +50,9 @@ class HistoryFragment :
             is HistoryClickEvent.FavClick -> {
                 historyViewModel.performFavAction(it.data)
             }
-
+            is HistoryClickEvent.SpeakerClick -> {
+                setTextToSpeak(it.data.translatedText.toString(), Locale(it.data.toCode.toString()))
+            }
             else -> {}
         }
     }

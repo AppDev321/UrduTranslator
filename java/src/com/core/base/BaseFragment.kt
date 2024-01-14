@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,6 +16,7 @@ import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.android.inputmethod.latin.R
 import com.core.extensions.showShortToast
@@ -21,14 +24,18 @@ import com.core.interfaces.MenuItemClickListener
 import com.core.module.IODispatcher
 import com.core.module.MainDispatcher
 import com.core.module.UnconfinedDispatcher
+import com.core.utils.AppLogger
 import com.core.utils.DialogManager
 import com.core.utils.Inflate
 import com.core.utils.PreferenceManager
 import com.core.utils.ResourceHelper
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
-abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) : Fragment() {
+abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) : Fragment(),
+    TextToSpeech.OnInitListener {
     private var _binding: VB? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -66,6 +73,9 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
 
     var requestingContactPermissionDialogAlreadyVisible = false
 
+    private var textToSpeech: TextToSpeech? = null
+
+
     protected abstract fun initUserInterface(view: View?)
 
     override fun onCreateView(
@@ -80,6 +90,8 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUserInterface(view)
+        textToSpeech = TextToSpeech(context, this)
+
     }
 
     override fun onDestroyView() {
@@ -136,5 +148,56 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
 
     }
 
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            textToSpeechInitializer()
+            val result = textToSpeech?.setLanguage(Locale.US)
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                AppLogger.e("TTS", "Language not supported")
+            }
+        } else {
+            AppLogger.e("TTS", "Initialization failed")
+        }
+    }
+
+    private fun textToSpeechInitializer() {
+        textToSpeech?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                viewLifecycleOwner.lifecycleScope.launch(mainDispatcher) {
+                    // viewDataBinding.fabStopPlay.show()
+                }
+            }
+
+            override fun onDone(utteranceId: String?) {
+                viewLifecycleOwner.lifecycleScope.launch(mainDispatcher) { stopTextToSpeech() }
+            }
+
+            override fun onError(utteranceId: String?) {
+                viewLifecycleOwner.lifecycleScope.launch(mainDispatcher) { stopTextToSpeech() }
+            }
+        })
+    }
+
+    private fun stopTextToSpeech() {
+        if (textToSpeech?.isSpeaking == true) {
+            textToSpeech?.stop()
+        }
+        // viewDataBinding.fabStopPlay.hide()
+    }
+
+    fun setTextToSpeak(msg: String,locale: Locale) {
+        val result = textToSpeech?.setLanguage(locale)
+        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            showToast( "Language not supported")
+        }
+        else {
+            textToSpeech?.speak(
+                msg,
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                null
+            )
+        }
+    }
 
 }

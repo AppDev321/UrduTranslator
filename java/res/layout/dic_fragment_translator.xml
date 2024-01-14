@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hLanguagesView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/_50sdp"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/textTranslateView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/_130sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:background="@drawable/text_area_boarder"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hLanguagesView">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edTranslate"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -110,7 +110,7 @@
                 android:background="@null"
                 android:gravity="start"
                 android:hint="Tap mic or type text to tranlsate"
-                android:scrollbars="none"
+                android:scrollbars="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/btnTranslate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -167,7 +167,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/translatedView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_220sdp"
             android:padding="10dp"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
@@ -217,9 +217,11 @@
             android:id="@+id/btnFavourite"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_15sdp"
             app:cardCornerRadius="5dp"
-            app:elevation="5dp"
+            app:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnHistory">

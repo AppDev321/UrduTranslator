@@ -85,6 +85,15 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
 
+        <action
+            android:id="@+id/action_conversation_to_home"
+            app:destination="@id/conversationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/fragmentTranslate"/>
+
 
         <action
             android:id="@+id/action_dictionary_to_home"
@@ -102,6 +111,12 @@
         android:id="@+id/detail_activity"
         android:name="com.dictionary.activity.DetailActivity"
         tools:layout="@layout/dic_detail_activity" />
+
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="com.dictionary.fragment.ConversationFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/dic_conversation_fragment"/>
 
 
     <fragment

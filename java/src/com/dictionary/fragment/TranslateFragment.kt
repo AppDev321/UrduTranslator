@@ -1,16 +1,10 @@
 package com.dictionary.fragment
 
-import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.media.AudioManager
-import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.speech.tts.TextToSpeech
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +14,7 @@ import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicFragmentTranslatorBinding
 import com.core.base.BaseFragment
 import com.core.data.model.translate.TranslateReq
+import com.core.database.entity.HistoryEntity
 import com.core.extensions.copyTextToClipboard
 import com.core.extensions.empty
 import com.core.extensions.hide
@@ -27,24 +22,27 @@ import com.core.extensions.hideKeyboard
 import com.core.extensions.show
 import com.core.utils.setOnSingleClickListener
 import com.dictionary.activity.DetailActivity
+import com.dictionary.events.FavouriteUpdate
+import com.dictionary.navigator.HistoryNavigator
 import com.dictionary.navigator.TranslateNavigator
 import com.dictionary.utils.TextQueryListenerManager
+import com.dictionary.viewmodel.HistoryViewModel
 import com.dictionary.viewmodel.TranslateViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.IOException
-import java.net.URLEncoder
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.Locale
 
 @AndroidEntryPoint
 class TranslateFragment :
     BaseFragment<DicFragmentTranslatorBinding>(DicFragmentTranslatorBinding::inflate),
-    TranslateNavigator {
+    TranslateNavigator, HistoryNavigator {
 
 
-    private val REQUEST_CODE_STT = 1
+    private val REQUEST_CODE_STT = -1
     private val translateView: TranslateViewModel by viewModels()
-    private var mTextToSpeech: TextToSpeech? = null
-    private var mMediaPlayer: MediaPlayer? = null
+    private val historyViewModel: HistoryViewModel by viewModels()
 
 
     private val startMicReading =
@@ -55,6 +53,13 @@ class TranslateFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         translateView.setNavigator(this)
+        historyViewModel.setNavigator(this)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 
     override fun initUserInterface(view: View?) {
@@ -99,7 +104,7 @@ class TranslateFragment :
             })
 
             btnDelete.setOnSingleClickListener {
-                edTranslate.text.clear()
+                edTranslate.text?.clear()
             }
 
             btnTranslate.setOnSingleClickListener {
@@ -127,25 +132,31 @@ class TranslateFragment :
             }
 
             hTranslationLayout.commonActionViews.apply {
+                btnCommonFav.setOnSingleClickListener {
+                    translateView.getLastRecord {
+                        historyViewModel.performFavAction(it)
+                    }
+                }
                 btnCopy.setOnSingleClickListener {
                     context?.copyTextToClipboard(hTranslationLayout.txtTranslation.text.toString())
                 }
                 btnCommonSpeaker.setOnSingleClickListener {
-                    mTextToSpeech?.speak(
+                    setTextToSpeak(
                         hTranslationLayout.txtTranslation.text.toString(),
-                        TextToSpeech.QUEUE_FLUSH,
-                        null,
-                        null
+                        Locale(preferenceManager.getPrefToLangCode())
                     )
                 }
-                btnCommonZoom.setOnSingleClickListener{
-                   translateView.getLastRecord{
+                btnCommonZoom.setOnSingleClickListener {
+                    translateView.getLastRecord {
                         val bundle = Bundle()
                         bundle.putSerializable(DetailActivity.SET_ENTITY_MODEL, it)
                         bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.zoomViewFragment)
-                        findNavController().navigate(R.id.action_fragmentHome_to_detailScreen, bundle)
+                        findNavController().navigate(
+                            R.id.action_fragmentHome_to_detailScreen,
+                            bundle
+                        )
 
-                   }
+                    }
                 }
             }
 
@@ -198,132 +209,34 @@ class TranslateFragment :
 
     }
 
+    override fun favouriteItemUpdated(item: HistoryEntity) {
+        if (item.isFav == true) {
+            viewDataBinding.hTranslationLayout.commonActionViews.btnCommonFav.setImageResource(R.drawable.ic_fav)
+        } else {
+            viewDataBinding.hTranslationLayout.commonActionViews.btnCommonFav.setImageResource(R.drawable.ic_fav_uncheck)
+
+        }
+    }
+
     override fun setProgressVisibility(visibility: Int) {
         viewDataBinding.apply {
             hTranslationLayout.txtLoadingBar.visibility = visibility
         }
-        super.setProgressVisibility(visibility)
+        // super.setProgressVisibility(visibility)
     }
 
-    override fun onTranslatedTextReceived(text: String) {
-        if (text.isNotEmpty()) {
-            viewDataBinding.hTranslationLayout.txtTranslation.text = text
+    override fun onTranslatedTextReceived(data: HistoryEntity) {
+        if (data.translatedText.toString().isNotEmpty()) {
+            viewDataBinding.hTranslationLayout.txtTranslation.text = data.translatedText
         } else {
             showToast("Translation not found. Try again later")
         }
     }
 
-    private fun hInitializeMedia(locale: Locale?, languageCode: String?, sentence: String?) {
-        if (mTextToSpeech == null) {
-            if (languageCode != null) {
-                sentence?.let { initializeTts(locale, languageCode, it) }
-            }
-        } else {
-            val result: Int? = mTextToSpeech?.setLanguage(locale)
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_AVAILABLE || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                val i = 0
-                if (i == 0) {
-                    if (sentence != null) {
-                        languageCode?.let { getAudio(sentence, it) }
-                    }
-                } else {
-                    showToast("No Internet Available")
-                }
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    sentence?.let { ttsGreater21(it) }
-                } else {
-                    sentence?.let { ttsUnder20(it) }
-                }
-            }
-        }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onFavouriteUpdate(event: FavouriteUpdate) {
+        favouriteItemUpdated(event.item)
     }
 
-    private fun initializeTts(
-        locale: Locale?, languageCode: String,
-        sentence: String
-    ) {
-        mTextToSpeech = TextToSpeech(requireContext()) { status: Int ->
-            if (status == TextToSpeech.SUCCESS) {
-                locale?.let { speakData(it, languageCode, sentence) }
-            } else {
-                mTextToSpeech = null
-                Toast.makeText(requireContext(), "Some thing went wrong.", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }
 
-    private fun ttsUnder20(text: String) {
-        if (mTextToSpeech != null) {
-            val map = HashMap<String, String>()
-            map[TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID] = "MessageId"
-            mTextToSpeech?.speak(text, TextToSpeech.QUEUE_FLUSH, map)
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun ttsGreater21(text: String) {
-        if (mTextToSpeech != null) {
-            val utteranceId = this.hashCode().toString() + ""
-            mTextToSpeech?.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
-        }
-    }
-
-    private fun speakData(locale: Locale, languageCode: String, sentence: String) {
-        mMediaPlayer = MediaPlayer()
-        if (mMediaPlayer != null) {
-            if (mMediaPlayer?.isPlaying == true) {
-                mMediaPlayer?.stop()
-                mMediaPlayer?.release()
-                mMediaPlayer = null
-                hInitializeMedia(locale, languageCode, sentence)
-            } else {
-                hInitializeMedia(locale, languageCode, sentence)
-            }
-        } else {
-            hInitializeMedia(locale, languageCode, sentence)
-        }
-    }
-
-    private fun getAudio(sentence: String, lang: String) {
-        try {
-
-            var url: String = ""
-            val encodedData = URLEncoder.encode(sentence, "UTF-8")
-            url = url.replace("**", lang)
-            url = url.replace("##", encodedData)
-            if (mMediaPlayer != null) {
-                mMediaPlayer = if (mMediaPlayer?.isPlaying == true) {
-                    mMediaPlayer?.stop()
-                    mMediaPlayer?.release()
-                    null
-                } else {
-                    mMediaPlayer?.release()
-                    null
-                }
-            }
-            mMediaPlayer = MediaPlayer()
-            mMediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            mMediaPlayer?.setDataSource(url)
-            mMediaPlayer?.prepareAsync()
-            mMediaPlayer?.setOnPreparedListener {
-                if (mMediaPlayer?.isPlaying == false) {
-                    mMediaPlayer?.start()
-                }
-            }
-            mMediaPlayer?.setOnErrorListener { _, _, _ ->
-                showToast("Audio Coming Soon please wait")
-                true
-            }
-            mMediaPlayer?.setOnCompletionListener {
-                mMediaPlayer?.stop()
-                mMediaPlayer?.release()
-            }
-        } catch (ie: IOException) {
-            ie.printStackTrace()
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-    }
 }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recConversation"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        tools:listitem="@layout/dic_item_right_conversation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/hLanguagesView"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:id="@+id/hLanguagesView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="5dp"
+            android:clickable="true"
+            android:elevation="0.1dp"
+            android:focusable="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mic_left_side"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mic_green"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/hLeftLanguage"
+                app:layout_constraintEnd_toEndOf="@+id/hLeftLanguage"
+                app:layout_constraintStart_toStartOf="@+id/hLeftLanguage" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hLeftLanguage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/white_bg_with_default_stroke"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_drop_down_arrow"
+                android:drawablePadding="20dp"
+                android:focusable="true"
+                android:minWidth="120dp"
+                android:text="English"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                 />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/hSplitLanguages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_split_lang" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mic_right_side"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mic_white"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/hRightLanguage"
+                app:layout_constraintEnd_toEndOf="@+id/hRightLanguage"
+                app:layout_constraintStart_toStartOf="@+id/hRightLanguage" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/hRightLanguage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/white_bg_with_default_stroke"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_drop_down_arrow"
+                android:drawablePadding="20dp"
+                android:focusable="true"
+                android:minWidth="120dp"
+                android:text="Urdu"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+              />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

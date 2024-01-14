@@ -152,58 +152,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/hEnd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/hFavIconCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/hCopy"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_fav" />
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/hFavIconUnCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/hCopy"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_fav_uncheck" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/hCopy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/hSpeakerIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_copy" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/hSpeakerIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_speaker" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            layout="@layout/dic_common_translate_action_views"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

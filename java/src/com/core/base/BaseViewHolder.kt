@@ -16,6 +16,7 @@ abstract class BaseViewHolder<T>(private var bindingView: View) :
 
     abstract fun bindItem(item: T)
 
+
     fun setItemClickListener(itemClickListener: ItemClickListener?) {
         itemClickListener?.let {
             this.itemClickListener = itemClickListener

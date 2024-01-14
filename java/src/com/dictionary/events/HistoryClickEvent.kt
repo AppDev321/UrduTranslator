@@ -1,4 +1,4 @@
-package com.dictionary.model
+package com.dictionary.events
 
 import com.core.database.entity.HistoryEntity
 

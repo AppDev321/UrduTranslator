@@ -6,7 +6,7 @@ import com.android.inputmethod.latin.R
 import com.core.base.BaseViewHolderWithAsyncPayLoadChange
 import com.core.database.entity.HistoryEntity
 import com.core.utils.setOnSingleClickListener
-import com.dictionary.model.HistoryClickEvent
+import com.dictionary.events.HistoryClickEvent
 
 open class CommonViewHolder(extendedView: View, var event: (HistoryClickEvent) -> Unit?) :
     BaseViewHolderWithAsyncPayLoadChange<HistoryEntity>(extendedView) {

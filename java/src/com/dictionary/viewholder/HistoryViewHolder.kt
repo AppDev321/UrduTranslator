@@ -2,7 +2,7 @@ package com.dictionary.viewholder
 
 import com.android.inputmethod.latin.databinding.DicItemHistoryBinding
 import com.core.database.entity.HistoryEntity
-import com.dictionary.model.HistoryClickEvent
+import com.dictionary.events.HistoryClickEvent
 
 class HistoryViewHolder(
     private var item: DicItemHistoryBinding,
@@ -11,12 +11,9 @@ class HistoryViewHolder(
 
     override fun bindItem(data: HistoryEntity) {
         super.bindItem(data)
-        item.hToLang.text = if(data.isUrdu == true) "Urdu" else "English"
-        item.hFromLang.text = if(data.isUrdu == true) "English" else "Urdu"
+        item.hToLang.text = data.toLang
+        item.hFromLang.text = data.fromLang
         item.hWord.text = data.textForTranslation
         item.hMeaning.text = data.translatedText
-
-
-
     }
 }

@@ -61,7 +61,9 @@ class DictionaryFragment :
 
     override fun setProgressVisibility(visibility: Int) {
         super.setProgressVisibility(visibility)
-        viewDataBinding.loadingProgressBar.visibility = visibility
+        viewDataBinding.apply{
+           loadingProgressBar.visibility = visibility
+        }
     }
 
     override fun displayDictionaryDataList(item: List<DictionaryEntity>) {

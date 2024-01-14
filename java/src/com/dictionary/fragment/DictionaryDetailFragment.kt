@@ -7,6 +7,8 @@ import com.android.inputmethod.latin.databinding.DicDictionaryDetailBinding
 import com.core.base.BaseFragment
 import com.core.database.entity.DictionaryEntity
 import com.core.utils.Utils.serializable
+import com.core.utils.setOnSingleClickListener
+import java.util.Locale
 
 class DictionaryDetailFragment :
     BaseFragment<DicDictionaryDetailBinding>(DicDictionaryDetailBinding::inflate) {
@@ -31,6 +33,12 @@ class DictionaryDetailFragment :
             viewDataBinding.apply {
                 txtEng.text = it.meaning
                 txtUrdu.text = it.word
+                txtEng.setOnSingleClickListener{view->
+                    setTextToSpeak(it.meaning.toString(), Locale("en"))
+                }
+                txtUrdu.setOnSingleClickListener{view->
+                    setTextToSpeak(it.word.toString(), Locale("ur"))
+                }
             }
         }
 

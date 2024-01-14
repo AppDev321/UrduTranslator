@@ -25,4 +25,8 @@ object DataBaseModule {
     @Provides
     fun provideHistoryDAO(database: AppDatabase) = database.historyDao()
 
+    @Singleton
+    @Provides
+    fun provideConversationDAO(database: AppDatabase) = database.conversationDao()
+
 }

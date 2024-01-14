@@ -34,7 +34,6 @@
         <activity
             android:name="com.dictionary.activity.SplashActivity"
             android:exported="true"
-            android:label="@string/title_activity_splash_screen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +43,6 @@
         <service
             android:name=".LatinIME"
             android:exported="true"
-            android:label="@string/english_ime_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
