@@ -10,4 +10,7 @@
     <dimen name="dialog_input_padding">5dp</dimen>
     <dimen name="new_dimen_8_dp">8dp</dimen>
     <dimen name="dimen_35_dp">35dp</dimen>
+
+    <dimen name="card_round_corner">10dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
 </resources>

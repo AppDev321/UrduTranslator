@@ -103,6 +103,8 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/fragmentTranslate"/>
+
+
     </fragment>
 
 
@@ -149,5 +151,10 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.dictionary.fragment.MoreFragment"
+        tools:layout="@layout/dic_more_fragment"/>
 
 </navigation>

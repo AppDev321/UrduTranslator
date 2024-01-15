@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:elevation="5dp"
         android:padding="5dp"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="@dimen/card_round_corner"
+        android:elevation="@dimen/card_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -58,8 +58,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        android:elevation="10dp"
+        app:cardCornerRadius="@dimen/card_round_corner"
+        android:elevation="@dimen/card_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/btnWordOftheDay"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +79,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        android:elevation="10dp"
+        app:cardCornerRadius="@dimen/card_round_corner"
+        android:elevation="@dimen/card_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/btnQuizOftheDay"
         app:layout_constraintEnd_toEndOf="parent"

@@ -33,6 +33,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.android.inputmethod.compat.TextViewCompatUtils;
 import com.android.inputmethod.compat.ViewCompatUtils;
 import com.android.inputmethod.latin.R;
@@ -45,7 +48,7 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 // TODO: Use Fragment to implement welcome screen and setup steps.
-public final class SetupWizardActivity extends Activity implements View.OnClickListener {
+public final class SetupWizardActivity extends AppCompatActivity implements View.OnClickListener {
     static final String TAG = SetupWizardActivity.class.getSimpleName();
 
     // For debugging purpose.
@@ -120,13 +123,24 @@ public final class SetupWizardActivity extends Activity implements View.OnClickL
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        setTheme(android.R.style.Theme_Translucent_NoTitleBar);
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
 
         mImm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         mHandler = new SettingsPoolingHandler(this, mImm);
 
         setContentView(R.layout.setup_wizard);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.urdu_keyboard_title));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         mSetupWizard = findViewById(R.id.setup_wizard);
 
         if (savedInstanceState == null) {
