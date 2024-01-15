@@ -14,7 +14,10 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashScreenBinding>(ActivitySplashScreenBinding::inflate) {
     private val activityScope = CoroutineScope(Dispatchers.Main)
+
+
     override fun initUserInterface() {
+
         activityScope.launch(Dispatchers.Default) {
             delay(2000)
             withContext(Dispatchers.Main)
@@ -30,4 +33,6 @@ class SplashActivity : BaseActivity<ActivitySplashScreenBinding>(ActivitySplashS
         activityScope.cancel()
         super.onPause()
     }
+
+
 }
