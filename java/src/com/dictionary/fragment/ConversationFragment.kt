@@ -108,13 +108,17 @@ class ConversationFragment :
 
     override fun addConversation(item: ConversationEntity) {
         conversationAdapter.publishListToAdapter(item)
+        val targetPosition = 0//conversationAdapter.itemCount - 1
+        viewDataBinding.recConversation.apply {
+            post{
+                val lastChild: View? =
+                    layoutManager?.findViewByPosition((layoutManager?.itemCount ?: 0) - 1)
+                if (lastChild != null) {
+                    layoutManager?.scrollToPosition(targetPosition)
+                }
+            }
 
-        val targetPosition = conversationAdapter.itemCount - 1
-        if (targetPosition >= 0) {
-            viewDataBinding.recConversation.scrollToPosition(targetPosition)
         }
-
-
     }
 
     private fun startMicReading(lang: String) {

@@ -40,7 +40,8 @@
         android:layout_height="0dp"
         android:padding="5dp"
         tools:listitem="@layout/dic_item_dictionary"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@+id/btnWordOftheDay"
         app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
 
@@ -53,5 +54,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/btnWordOftheDay"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
+
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:padding="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_word_of_the_day"
+            android:drawablePadding="@dimen/_10sdp"
+            android:text="Word of the day"
+            android:textSize="14dp"/>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/btnQuizOftheDay"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
+
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:padding="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_quiz_of_the_day"
+            android:drawablePadding="@dimen/_10sdp"
+            android:text="Quiz of the day"
+            android:textSize="14dp"/>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

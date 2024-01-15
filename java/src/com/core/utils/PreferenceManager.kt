@@ -1,8 +1,11 @@
 package com.core.utils
 
 import android.content.Context
-import com.android.inputmethod.latin.BuildConfig
-import java.util.prefs.Preferences
+import com.core.database.entity.DictionaryEntity
+import com.dictionary.model.QuizOfTheDay
+import com.dictionary.model.WordOfTheDay
+import com.google.gson.Gson
+import org.apache.commons.net.telnet.TelnetOption.getOption
 
 
 class PreferenceManager constructor(val context: Context) {
@@ -21,7 +24,8 @@ class PreferenceManager constructor(val context: Context) {
         private const val PREF_TO_CODE = "to_code"
         private const val PREF_FROM_LANG_TEXT = "from_code_lang_text"
         private const val PREF_TO_LANG_TEXT = "to_code_lang_text"
-
+        private const val PREF_QUIZ_OF_THE_DAY = "quiz_of_the_day"
+        private const val PREF_WORD_OF_THE_DAY = "word_of_the_day"
     }
     // endregion
 
@@ -71,6 +75,38 @@ class PreferenceManager constructor(val context: Context) {
     }
     fun getPrefFromLangText(): String {
         return sharedPreferences.getString(PREF_FROM_LANG_TEXT,"English") as String
+    }
+
+    fun saveQuizOfTheDay(data: QuizOfTheDay?) {
+        val jsonString =  Gson().toJson(data)
+        sharedPreferences.edit().putString(PREF_QUIZ_OF_THE_DAY, jsonString).apply()
+    }
+
+    fun getQuizOfTheDay(): QuizOfTheDay? {
+        val jsonString = sharedPreferences.getString(PREF_QUIZ_OF_THE_DAY, null)
+        return Gson().fromJson(jsonString, QuizOfTheDay::class.java)
+    }
+
+    fun checkIsQuizOfTheDayExits():Boolean
+    {
+        return getQuizOfTheDay() != null
+    }
+
+
+
+    fun saveWordOfTheDay(data: WordOfTheDay?) {
+        val jsonString =  Gson().toJson(data)
+        sharedPreferences.edit().putString(PREF_WORD_OF_THE_DAY, jsonString).apply()
+    }
+
+    fun getWordOfTheDay(): WordOfTheDay? {
+        val jsonString = sharedPreferences.getString(PREF_WORD_OF_THE_DAY, null)
+        return Gson().fromJson(jsonString, WordOfTheDay::class.java)
+    }
+
+    fun checkIsWordOfTheDayExits():Boolean
+    {
+        return getWordOfTheDay() != null
     }
 
 

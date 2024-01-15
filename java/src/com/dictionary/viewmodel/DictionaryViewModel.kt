@@ -4,7 +4,10 @@ import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.core.base.BaseViewModel
 import com.core.database.repo.dictionary.DictionaryRepo
+import com.core.extensions.safeGet
 import com.core.utils.PreferenceManager
+import com.dictionary.model.QuizOfTheDay
+import com.dictionary.model.WordOfTheDay
 import com.dictionary.navigator.DictionaryNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -22,9 +25,9 @@ class DictionaryViewModel @Inject constructor(
     fun getDictionaryData() {
         getNavigator()?.setProgressVisibility(View.VISIBLE)
         viewModelScope.launch(ioDispatcher) {
-         val list = async {
-              dictionaryRepo.getDictionaryDataList()
-          }.await()
+            val list = async {
+                dictionaryRepo.getDictionaryDataList()
+            }.await()
             withContext(mainDispatcher)
             {
                 getNavigator()?.setProgressVisibility(View.GONE)
@@ -32,6 +35,38 @@ class DictionaryViewModel @Inject constructor(
             }
         }
 
+        if (preferenceManager.checkIsQuizOfTheDayExits().not()) {
+            getQuizOfTheDay()
+        }
+        if (preferenceManager.checkIsWordOfTheDayExits().not()) {
+            getWordOfTheDay()
+        }
+    }
+
+    private fun getQuizOfTheDay() {
+        viewModelScope.launch(ioDispatcher) {
+            val quizData = dictionaryRepo.getDictionaryRandomWord()
+            val quizOptions = dictionaryRepo.getDictionaryRandomOptions()
+            val quizQuestion = QuizOfTheDay(
+                word = quizData[0],
+                answer = quizData[1],
+                optionList = quizOptions
+            ).getQuestion()
+            preferenceManager.saveQuizOfTheDay(quizQuestion)
+        }
+
+    }
+
+    private fun getWordOfTheDay()
+    {
+        viewModelScope.launch(ioDispatcher) {
+            val wordData = dictionaryRepo.getDictionaryRandomDictionaryObject()
+            val wordModel = WordOfTheDay(
+                word = wordData.meaning.safeGet(),
+                meaning = wordData.word.safeGet(),
+            ).getWordOfTheDay()
+            preferenceManager.saveWordOfTheDay(wordModel)
+        }
     }
 
 

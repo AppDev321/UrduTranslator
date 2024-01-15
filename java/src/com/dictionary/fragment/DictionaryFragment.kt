@@ -10,6 +10,7 @@ import com.android.inputmethod.latin.databinding.DicDictionaryFragmentBinding
 import com.core.base.BaseFragment
 import com.core.database.entity.DictionaryEntity
 import com.core.interfaces.ItemClickListener
+import com.core.utils.setOnSingleClickListener
 import com.dictionary.activity.DetailActivity
 import com.dictionary.adapter.DictionaryAdapter
 import com.dictionary.navigator.DictionaryNavigator
@@ -39,6 +40,17 @@ class DictionaryFragment :
         }
         dictionaryViewModel.getDictionaryData()
 
+        viewDataBinding.btnQuizOftheDay.setOnSingleClickListener{
+            val bundle = Bundle()
+            bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_quiz)
+            findNavController().navigate(R.id.action_dic_to_quiz,bundle)
+        }
+
+        viewDataBinding.btnWordOftheDay.setOnSingleClickListener{
+            val bundle = Bundle()
+            bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_word)
+            findNavController().navigate(R.id.action_dic_to_word,bundle)
+        }
 
         viewDataBinding.edSearchBar.addTextChangedListener(
             TextQueryListenerManager(

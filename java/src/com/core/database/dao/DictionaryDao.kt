@@ -12,4 +12,13 @@ interface DictionaryDao {
 
     @Query("Select * from a_Group")
     suspend fun getDictionaryData (): List<DictionaryEntity>
+
+
+    @Query("Select * from a_Group ORDER BY RANDOM() LIMIT 3")
+    suspend fun getRandomOption (): List<DictionaryEntity>
+
+    @Query("Select * from a_Group ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomWord (): DictionaryEntity
+
+
 }

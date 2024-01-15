@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ import com.core.extensions.copyTextToClipboard
 import com.core.extensions.empty
 import com.core.extensions.hide
 import com.core.extensions.hideKeyboard
+import com.core.extensions.hideKeyboardAndClearFocus
+import com.core.extensions.hideKeyboardFromStart
 import com.core.extensions.show
 import com.core.utils.setOnSingleClickListener
 import com.dictionary.activity.DetailActivity
@@ -55,6 +58,7 @@ class TranslateFragment :
         translateView.setNavigator(this)
         historyViewModel.setNavigator(this)
         EventBus.getDefault().register(this)
+
     }
 
     override fun onDestroy() {
@@ -63,7 +67,7 @@ class TranslateFragment :
     }
 
     override fun initUserInterface(view: View?) {
-
+        hideKeyboardFromStart()
         viewDataBinding.apply {
             translatedView.hide()
             hLeftLanguage.text = preferenceManager.getPrefFromLangText()

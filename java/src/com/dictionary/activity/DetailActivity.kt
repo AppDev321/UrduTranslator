@@ -65,6 +65,13 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
                 navGraph.addArgument(DictionaryDetailFragment.dictionaryEntityArgs, argument)
                 R.id.dictionaryDetailViewFragment
             }
+            R.id.action_dic_to_quiz -> {
+                R.id.quizFragment
+            }
+
+            R.id.action_dic_to_word -> {
+                R.id.wordFragment
+            }
             else -> {
                 val historyEntity = intent.extras?.serializable(SET_ENTITY_MODEL) as HistoryEntity?
                 val argument = NavArgument.Builder().setDefaultValue(historyEntity).build()

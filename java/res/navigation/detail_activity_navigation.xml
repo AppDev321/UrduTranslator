@@ -62,5 +62,17 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.dictionary.fragment.QuizFragment"
+        tools:layout="@layout/dic_quiz_fragment">
+
+    </fragment>
+    <fragment
+        android:id="@+id/wordFragment"
+        android:name="com.dictionary.fragment.WordFragment"
+        tools:layout="@layout/dic_word_fragment">
+
+    </fragment>
 
 </navigation>

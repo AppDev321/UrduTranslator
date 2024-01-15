@@ -6,6 +6,7 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.RequiresApi
@@ -14,6 +15,12 @@ import androidx.fragment.app.Fragment
 
 fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
+}
+
+fun Fragment.hideKeyboardFromStart() {
+    view?.let {
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+    }
 }
 
 fun Activity.hideKeyboard() {
