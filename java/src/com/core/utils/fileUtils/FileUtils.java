@@ -5,7 +5,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
@@ -32,8 +31,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import static com.core.utils.fileUtils.CacheHelper.TAG;
@@ -285,7 +282,7 @@ public class FileUtils {
     }
 
 
-    public static String getOutputFilePath(String type, String filename) {
+    public static String getOutputFilePath(String type, String filename, String PAINTED_IMAGE_EXTENSION) {
         File outputFile;
         // All type file should be store to app's private storage ie,"Android/media" for Q and above
         if (Utils.INSTANCE.getAndroidQAndAbove()) {

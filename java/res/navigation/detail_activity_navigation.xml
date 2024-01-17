@@ -75,4 +75,11 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/editorFragment"
+        android:name="com.dictionary.fragment.painter.UrduEditorFragment"
+        tools:layout="@layout/dic_editor_fragment">
+
+    </fragment>
 </navigation>

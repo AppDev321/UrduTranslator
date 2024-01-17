@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+    <ja.burhanrashid52.photoeditor.PhotoEditorView
+        android:id="@+id/photoEditorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/ic_editor_bar_bg"
+            android:contentDescription="background gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPhotoEditBack"
+            style="@style/MediaPainterMenuItem"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhotoEditUndo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhotoEditUndo"
+            app:tint="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPhotoEditUndo"
+            style="@style/MediaPainterMenuItem"
+            android:src="@drawable/ic_undo"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhotoEditRedo"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPhotoEditRedo"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhotoEditRedo" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPhotoEditRedo"
+            style="@style/MediaPainterMenuItem"
+            android:src="@drawable/ic_redo"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhotoEditEemoji"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPhotoEditEemoji"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhotoEditEemoji" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPhotoEditEemoji"
+            style="@style/MediaPainterMenuItem"
+            android:src="@drawable/ic_emoji"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhotoEditText"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPhotoEditText"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhotoEditText" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPhotoEditText"
+            style="@style/MediaPainterMenuItem"
+            android:src="@drawable/ic_type_on_media"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPhotoEditPaint"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewPhotoEditPaint"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPhotoEditPaint" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewPhotoEditPaint"
+            style="@style/MediaPainterMenuItem"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:src="@drawable/ic_free_write"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.dictionary.utils.VerticalSlideColorPicker
+            android:id="@+id/colorPickerView"
+            style="@style/VerticalColorPicker"
+            android:layout_alignParentEnd="true"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewPhotoEditPaint"
+            app:layout_constraintStart_toStartOf="@+id/imageViewPhotoEditPaint"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPhotoEditPaint" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabPhotoDone"
+            style="@style/appFloatingButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:elevation="@dimen/_15sdp"
+            android:focusable="true"
+            android:src="@drawable/ic_tick_fab"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

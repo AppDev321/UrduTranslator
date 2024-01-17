@@ -599,4 +599,12 @@
         <attr name="minValue" format="integer" />
         <attr name="stepValue" format="integer" />
     </declare-styleable>
+
+
+    <declare-styleable name="VerticalSlideColorPicker">
+        <attr name="borderColor" format="color" />
+        <attr name="defaultColor" format="color" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="colors" format="reference" />
+    </declare-styleable>
 </resources>

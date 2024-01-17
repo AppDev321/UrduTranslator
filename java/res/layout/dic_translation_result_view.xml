@@ -8,7 +8,7 @@
     android:layout_margin="10dp"
     android:padding="@dimen/_4sdp"
     app:cardCornerRadius="@dimen/card_round_corner"
-    android:elevation="@dimen/card_elevation">
+    app:cardElevation="@dimen/card_elevation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
-                android:elevation="6dp"
+                app:cardElevation="6dp"
                 android:indeterminate="true"
                 android:theme="@style/AppTheme.progress"
                 android:visibility="gone"

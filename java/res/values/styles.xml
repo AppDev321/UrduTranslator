@@ -42,7 +42,11 @@
         <item name="windowMinWidthMinor">0%</item>
     </style>
 
-
+    <style name="BottomSheetStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">@android:color/white</item>
@@ -243,6 +247,37 @@
         <item name="colorAccent">@color/primaryColor</item>
     </style>
 
+    <style name="VerticalColorPicker">
+        <item name="android:layout_width">@dimen/_15sdp</item>
+        <item name="android:layout_height">@dimen/_180sdp</item>
+        <item name="android:layout_marginTop">@dimen/_15sdp</item>
+        <item name="defaultColor">@color/colorPrimary</item>
 
+    </style>
 
+    <style name="MediaPainterMenuItem">
+        <item name="android:layout_width">@dimen/_25sdp</item>
+        <item name="android:layout_height">@dimen/_25sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_5sdp</item>
+        <item name="android:layout_marginStart">@dimen/_5sdp</item>
+        <item name="android:padding">@dimen/_5sdp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="appFloatingButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/_30sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_10sdp</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="borderWidth">0dp</item>
+    </style>
+
+    <style name="MediaAddTextEditText">
+        <item name="android:singleLine">true</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlActivated">#FFFFFF</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

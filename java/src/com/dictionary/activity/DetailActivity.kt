@@ -16,6 +16,7 @@ import com.core.utils.Utils.serializable
 import com.dictionary.fragment.DictionaryDetailFragment
 import com.dictionary.fragment.HistoryFragment
 import com.dictionary.fragment.ZoomFragment
+import com.dictionary.fragment.painter.UrduEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +31,7 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
         const val DEFAULT_NAV_HOST_KEY = "nav_host_id"
         const val SET_FAVOURITE_VIEW_TYPE = "view_type"
         const val SET_ENTITY_MODEL = "entity_model"
-
+        const val IMAGEPATH = ""
     }
 
 
@@ -71,6 +72,12 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
 
             R.id.action_dic_to_word -> {
                 R.id.wordFragment
+            }
+           R.id.action_more_to_editor ->{
+               val imagePath = intent.extras?.getString(IMAGEPATH)
+               val argument = NavArgument.Builder().setDefaultValue(imagePath).build()
+               navGraph.addArgument(UrduEditorFragment.IMAGEPATH, argument)
+                R.id.editorFragment
             }
             else -> {
                 val historyEntity = intent.extras?.serializable(SET_ENTITY_MODEL) as HistoryEntity?

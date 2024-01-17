@@ -142,4 +142,5 @@
     <color name="shimerColor">#A2A3A3</color>
     <color name="gray">#C4C4C4</color>
     <color name="bottomNavIconTintColor">#D5D0D0</color>
+    <color name="transparent">#00000000</color>
 </resources>
