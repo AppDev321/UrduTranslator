@@ -6,26 +6,21 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.core.extensions.TAG
 import com.core.utils.AppLogger
 import com.core.utils.PreferenceManager
 import com.core.utils.fileUtils.FileUtils
-import com.dictionary.workmanager.AlarmItem
-import com.dictionary.workmanager.AlarmScheduler
-import com.dictionary.workmanager.AlarmSchedulerImpl
+import com.dictionary.workmanager.AlarmSetter
 import com.dictionary.workmanager.NotificationReceiver
 import com.dictionary.workmanager.QuizNotificationWorker
 import com.dictionary.workmanager.WordNotificationWorker
 import dagger.hilt.android.HiltAndroidApp
-import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -50,22 +45,30 @@ class BaseApplication : Application() , androidx.lifecycle.DefaultLifecycleObser
 
         createQuizWorkerService()
         createWordWorkerService()
-        val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(this)
+
+        val selectedInterval = AlarmSetter.BackupAlarmInterval.getInternalByOrdinal(0)
+        val nextBackupTime = AlarmSetter.BackupAlarmInterval.EVENING.interval
+        AlarmSetter.setAlarmWithInterval(
+           this,
+            selectedInterval, nextBackupTime
+        )
+
+       /* val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(this)
         val alarmItem=  AlarmItem(
             message = "Message",
             alarmHour =  20,
             alarmMin = 0
         )
         alarmItem.let(alarmScheduler::schedule)
-
+        val alarmScheduler2: AlarmScheduler = AlarmSchedulerImpl(this)
         val alarmItem2=  AlarmItem(
             message = "Message",
             alarmHour =  17,
             alarmMin = 0
         )
-        alarmItem2.let(alarmScheduler::schedule)
+        alarmItem2.let(alarmScheduler2::schedule)
 
-
+*/
       /*  createWorkerService()
         createDailyQuizNotificationAlarm()*/
           ProcessLifecycleOwner.get().lifecycle.addObserver(this)

@@ -9,21 +9,29 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicConversationFragmentBinding
 import com.core.base.BaseFragment
 import com.core.data.model.translate.TranslateReq
 import com.core.database.entity.ConversationEntity
 import com.core.database.entity.HistoryEntity
 import com.core.extensions.copyTextToClipboard
+import com.core.extensions.safeGet
 import com.core.utils.setOnSingleClickListener
 import com.dictionary.adapter.ConversationAdapter
+import com.dictionary.dialog.LanguageSelectDialog
 import com.dictionary.events.ConversationClickEvent
+import com.dictionary.events.LanguageChangeEvent
 import com.dictionary.navigator.ConversationNavigator
 import com.dictionary.navigator.TranslateNavigator
 import com.dictionary.viewmodel.ConversationViewModel
 import com.dictionary.viewmodel.TranslateViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.Locale
 
 
@@ -38,11 +46,11 @@ class ConversationFragment :
     private val conversationViewModel: ConversationViewModel by viewModels()
     private lateinit var conversationAdapter: ConversationAdapter
 
-
     private val startMicReading =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             handleSpeechRecognitionResult(result)
         }
+
     private var clickEvent: (ConversationClickEvent) -> Unit = {
         when (it) {
             is ConversationClickEvent.CopyClick -> {
@@ -65,6 +73,8 @@ class ConversationFragment :
         super.onCreate(savedInstanceState)
         conversationViewModel.setNavigator(this)
         translateView.setNavigator(this)
+        EventBus.getDefault().register(this)
+
     }
 
     override fun initUserInterface(view: View?) {
@@ -81,6 +91,19 @@ class ConversationFragment :
 
             hLeftLanguage.text = preferenceManager.getPrefFromLangText()
             hRightLanguage.text = preferenceManager.getPrefToLangText()
+
+            hLeftLanguage.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putBoolean(LanguageSelectDialog.KEY_LANGUAGE_SIDE, true)
+                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+            }
+
+
+            hRightLanguage.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putBoolean(LanguageSelectDialog.KEY_LANGUAGE_SIDE, false)
+                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+            }
 
             hSplitLanguages.setOnSingleClickListener {
                 translateView.transformLanguage()
@@ -185,4 +208,29 @@ class ConversationFragment :
         )
         conversationViewModel.addConversationData(model)
     }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLanguageChangeEvent(event: LanguageChangeEvent) {
+        viewDataBinding.apply {
+            event.langModel.let {
+                if (event.isLeftSide) {
+                    hLeftLanguage.text = it.language
+                    preferenceManager.setPrefFromLangCode(it.code.safeGet())
+                    preferenceManager.setPrefFromLangText(it.language.safeGet())
+                } else {
+                    hRightLanguage.text = event.langModel.language
+                    preferenceManager.setPrefToLangCode(it.code.safeGet())
+                    preferenceManager.setPrefToLangText(it.language.safeGet())
+                }
+            }
+        }
+    }
+
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
 }

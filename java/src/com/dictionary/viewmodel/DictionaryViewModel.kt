@@ -43,7 +43,7 @@ class DictionaryViewModel @Inject constructor(
         }
     }
 
-    private fun getQuizOfTheDay() {
+     fun getQuizOfTheDay() {
         viewModelScope.launch(ioDispatcher) {
             val quizData = dictionaryRepo.getDictionaryRandomWord()
             val quizOptions = dictionaryRepo.getDictionaryRandomOptions()
@@ -57,7 +57,7 @@ class DictionaryViewModel @Inject constructor(
 
     }
 
-    private fun getWordOfTheDay()
+     fun getWordOfTheDay()
     {
         viewModelScope.launch(ioDispatcher) {
             val wordData = dictionaryRepo.getDictionaryRandomDictionaryObject()

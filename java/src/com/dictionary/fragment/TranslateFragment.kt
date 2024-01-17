@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -20,12 +19,14 @@ import com.core.extensions.copyTextToClipboard
 import com.core.extensions.empty
 import com.core.extensions.hide
 import com.core.extensions.hideKeyboard
-import com.core.extensions.hideKeyboardAndClearFocus
 import com.core.extensions.hideKeyboardFromStart
+import com.core.extensions.safeGet
 import com.core.extensions.show
 import com.core.utils.setOnSingleClickListener
 import com.dictionary.activity.DetailActivity
+import com.dictionary.dialog.LanguageSelectDialog.Companion.KEY_LANGUAGE_SIDE
 import com.dictionary.events.FavouriteUpdate
+import com.dictionary.events.LanguageChangeEvent
 import com.dictionary.navigator.HistoryNavigator
 import com.dictionary.navigator.TranslateNavigator
 import com.dictionary.utils.TextQueryListenerManager
@@ -58,7 +59,6 @@ class TranslateFragment :
         translateView.setNavigator(this)
         historyViewModel.setNavigator(this)
         EventBus.getDefault().register(this)
-
     }
 
     override fun onDestroy() {
@@ -98,6 +98,19 @@ class TranslateFragment :
                 translateView.transformLanguage()
             }
 
+            hLeftLanguage.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putBoolean(KEY_LANGUAGE_SIDE, true)
+                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+            }
+
+
+            hRightLanguage.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putBoolean(KEY_LANGUAGE_SIDE, false)
+                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+            }
+
             edTranslate.addTextChangedListener(TextQueryListenerManager(
                 activity?.lifecycle
             ) { queryText ->
@@ -110,6 +123,7 @@ class TranslateFragment :
             btnDelete.setOnSingleClickListener {
                 edTranslate.text?.clear()
             }
+
 
             btnTranslate.setOnSingleClickListener {
                 activity?.hideKeyboard()
@@ -163,10 +177,7 @@ class TranslateFragment :
                     }
                 }
             }
-
         }
-
-
     }
 
 
@@ -226,7 +237,7 @@ class TranslateFragment :
         viewDataBinding.apply {
             hTranslationLayout.txtLoadingBar.visibility = visibility
         }
-        // super.setProgressVisibility(visibility)
+
     }
 
     override fun onTranslatedTextReceived(data: HistoryEntity) {
@@ -242,5 +253,21 @@ class TranslateFragment :
         favouriteItemUpdated(event.item)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLanguageChangeEvent(event: LanguageChangeEvent) {
+        viewDataBinding.apply {
+            event.langModel.let {
+                if (event.isLeftSide) {
+                    hLeftLanguage.text = it.language
+                    preferenceManager.setPrefFromLangCode(it.code.safeGet())
+                    preferenceManager.setPrefFromLangText(it.language.safeGet())
+                } else {
+                    hRightLanguage.text = event.langModel.language
+                    preferenceManager.setPrefToLangCode(it.code.safeGet())
+                    preferenceManager.setPrefToLangText(it.language.safeGet())
+                }
+            }
+        }
+    }
 
 }

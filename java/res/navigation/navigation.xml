@@ -15,55 +15,6 @@
         android:name="com.dictionary.fragment.TranslateFragment"
         android:label="fragment_home"
         tools:layout="@layout/dic_fragment_translator">
-        <!-- <argument
-             android:name="Type"
-             app:argType="com.wit.wittranslator.domain.model.TranslationModel"
-             app:nullable="true"
-             android:defaultValue="@null" />
-         <action
-             android:id="@+id/action_fragmentHome_to_conversationFragment"
-             app:destination="@id/conversationFragment"
-             app:enterAnim="@anim/nav_default_enter_anim"
-             app:exitAnim="@anim/nav_default_exit_anim"
-             app:popEnterAnim="@anim/slide_in_left"
-             app:popExitAnim="@anim/slide_out_right" />
-         <action
-             android:id="@+id/action_fragmentHome_to_textEnterBottomSheetDialog"
-             app:destination="@id/textEnterBottomSheetDialog"
-             app:enterAnim="@anim/nav_default_enter_anim"
-             app:exitAnim="@anim/nav_default_exit_anim"
-             app:popEnterAnim="@anim/slide_in_left"
-             app:popExitAnim="@anim/slide_out_right" />
-
-         <action
-             android:id="@+id/action_fragmentHome_to_selectLanguageBottomSheetDialog"
-             app:destination="@id/selectLanguageBottomSheetDialog"
-             app:enterAnim="@anim/nav_default_enter_anim"
-             app:exitAnim="@anim/nav_default_exit_anim"
-             app:popEnterAnim="@anim/slide_in_left"
-             app:popExitAnim="@anim/slide_out_right" />
-         <action
-             android:id="@+id/action_fragmentHome_to_favoritesFragment"
-             app:destination="@id/favoritesFragment"
-             app:enterAnim="@anim/nav_default_enter_anim"
-             app:exitAnim="@anim/nav_default_exit_anim"
-             app:popEnterAnim="@anim/slide_in_left"
-             app:popExitAnim="@anim/slide_out_right" />
-
-
-         <dialog
-             android:id="@+id/textEnterBottomSheetDialog"
-             android:name="com.wit.wittranslator.presentation.ui.dialogs.TextEnterBottomSheet.TextEnterBottomSheet"
-             android:label="TextEnterBottomSheetDialog"
-             tools:layout="@layout/text_enter_bottom_sheet" />
-
-
-         <dialog
-             android:id="@+id/ratingExitBottomSheetDialog"
-             android:name="com.wit.wittranslator.presentation.ui.dialogs.dialogexitads.view.DialogExitWithAd"
-             android:label="ratingExitBottomSheetDialog"
-             tools:layout="@layout/dialogexitbottomsheet" />
-         -->
 
 
         <action
@@ -110,6 +61,14 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/fragmentTranslate" />
 
+        <action
+            android:id="@+id/action_move_to_language_dialog"
+            app:destination="@id/selectLanguageBottomSheetDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
 
     </fragment>
 
@@ -117,7 +76,15 @@
         android:id="@+id/conversationFragment"
         android:name="com.dictionary.fragment.ConversationFragment"
         android:label="fragment_home"
-        tools:layout="@layout/dic_conversation_fragment" />
+        tools:layout="@layout/dic_conversation_fragment" >
+        <action
+            android:id="@+id/action_move_to_language_dialog"
+            app:destination="@id/selectLanguageBottomSheetDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
 
     <fragment
@@ -176,5 +143,10 @@
         tools:layout="@layout/dic_bottom_sheet_image_picker"
         android:name="com.dictionary.dialog.ImageChooserDialog" />
 
-
+    <dialog
+        android:id="@+id/selectLanguageBottomSheetDialog"
+        android:name="com.dictionary.dialog.LanguageSelectDialog"
+        android:label="SelectLanguageBottomSheetDialog"
+        tools:layout="@layout/dic_select_language_bottom_sheet">
+    </dialog>
 </navigation>

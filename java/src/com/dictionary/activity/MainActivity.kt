@@ -1,19 +1,33 @@
 package com.dictionary.activity
 
+import android.content.Intent
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicActivityMainBinding
 import com.core.base.BaseActivity
+import com.core.extensions.TAG
 import com.core.extensions.hide
 import com.core.extensions.show
+import com.core.utils.AppLogger
+import com.dictionary.viewmodel.DictionaryViewModel
+import com.dictionary.viewmodel.TranslateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding::inflate) {
+    private val dictionaryViewModel: DictionaryViewModel by viewModels()
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        AppLogger.e(TAG,"intent come")
+        dictionaryViewModel.getQuizOfTheDay()
+        dictionaryViewModel.getWordOfTheDay()
 
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment

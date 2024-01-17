@@ -6,7 +6,7 @@ data class QuizOfTheDay(
     val answer: String = "answer",
     val optionList: List<String> = arrayListOf("a", "b", "c")
 
-){
+) {
     fun getQuestion(): QuizOfTheDay {
         return QuizOfTheDay(
             question = "$question $word?",
