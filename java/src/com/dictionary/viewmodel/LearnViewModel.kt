@@ -45,7 +45,7 @@ class LearnViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             val dataList = when (pos) {
                 2 -> {
-                    learnRepo.getCategoryList()
+                    learnRepo.getConversations()
                 }
                 else -> learnRepo.getCategoryList()
             }
