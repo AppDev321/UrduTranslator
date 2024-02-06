@@ -82,4 +82,12 @@
         tools:layout="@layout/dic_editor_fragment">
 
     </fragment>
+
+
+    <fragment
+        android:id="@+id/learnSubFragment"
+        android:name="com.dictionary.fragment.LearnSubFragment"
+        tools:layout="@layout/dic_more_fragment">
+
+    </fragment>
 </navigation>

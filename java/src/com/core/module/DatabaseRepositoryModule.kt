@@ -6,6 +6,8 @@ import com.core.database.repo.dictionary.DictionaryRepo
 import com.core.database.repo.dictionary.DictionaryRepoImpl
 import com.core.database.repo.history.HistoryRepo
 import com.core.database.repo.history.HistoryRepoImpl
+import com.core.database.repo.learn.LearnRepo
+import com.core.database.repo.learn.LearnRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,4 +25,7 @@ abstract class DatabaseRepositoryModule {
     @Binds
     abstract fun bindConversationDbRepository(conversationRepoImpl: ConversationRepoImpl): ConversationRepo
 
+
+    @Binds
+    abstract fun bindLearnDbRepository(learnRepoImpl: LearnRepoImpl): LearnRepo
 }

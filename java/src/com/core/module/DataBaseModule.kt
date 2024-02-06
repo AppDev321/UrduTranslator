@@ -29,4 +29,8 @@ object DataBaseModule {
     @Provides
     fun provideConversationDAO(database: AppDatabase) = database.conversationDao()
 
+    @Singleton
+    @Provides
+    fun provideLearnDAO(database: AppDatabase) = database.learnDao()
+
 }

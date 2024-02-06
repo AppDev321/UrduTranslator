@@ -120,6 +120,22 @@
     </fragment>
 
     <fragment
+        android:id="@+id/learnFragment"
+        android:name="com.dictionary.fragment.LearnFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/dic_more_fragment">
+
+        <action
+            android:id="@+id/action_learn_to_detail"
+            app:destination="@id/detail_activity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/moreFragment"
         android:name="com.dictionary.fragment.MoreFragment"
         tools:layout="@layout/dic_more_fragment">

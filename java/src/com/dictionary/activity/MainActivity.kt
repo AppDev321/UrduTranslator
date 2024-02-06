@@ -23,7 +23,6 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        AppLogger.e(TAG,"intent come")
         dictionaryViewModel.getQuizOfTheDay()
         dictionaryViewModel.getWordOfTheDay()
 
