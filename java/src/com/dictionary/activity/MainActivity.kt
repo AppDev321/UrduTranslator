@@ -1,19 +1,16 @@
 package com.dictionary.activity
 
 import android.content.Intent
+import android.view.Gravity
+import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicActivityMainBinding
 import com.core.base.BaseActivity
-import com.core.extensions.TAG
 import com.core.extensions.hide
 import com.core.extensions.show
-import com.core.utils.AppLogger
 import com.dictionary.viewmodel.DictionaryViewModel
-import com.dictionary.viewmodel.TranslateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -27,24 +24,41 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
         dictionaryViewModel.getWordOfTheDay()
 
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(com.android.inputmethod.latin.R.id.activity_main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
     override fun initUserInterface() {
 
         setSupportActionBar(viewDataBinding.toolbar)
-        viewDataBinding.toolbar.title = getString(R.string.dic_app_name)
+        viewDataBinding.toolbar.title =
+            getString(com.android.inputmethod.latin.R.string.dic_app_name)
 
         val navView = viewDataBinding.bottomNav
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(com.android.inputmethod.latin.R.id.activity_main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         navView.setupWithNavController(navController)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            val mDrawerLayout = viewDataBinding.drawerLayout
+            if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT)
+            } else {
+                mDrawerLayout.openDrawer(Gravity.LEFT)
+            }
+        } else {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onNetworkConnected() {
