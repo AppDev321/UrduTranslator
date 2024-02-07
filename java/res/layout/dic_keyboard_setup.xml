@@ -40,7 +40,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enable Keyboard from Setting"
+                android:text="Enable Urdu Keyboard from Settings"
                 android:textSize="@dimen/_14sdp"
                 />
 
@@ -117,7 +117,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Fast Urdu Keyboard from Setting"
+                android:text="Select Urdu Keyboard from Settings"
                 android:textSize="@dimen/_14sdp"
                 />
 
@@ -193,7 +193,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fast Urdu Keyboard is set to default keyboard"
+                android:text="Urdu Keyboard is set to default keyboard"
                 android:textSize="@dimen/_14sdp"
                 />
 
