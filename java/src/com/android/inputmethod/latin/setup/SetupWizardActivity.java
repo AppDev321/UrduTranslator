@@ -123,7 +123,7 @@ public final class SetupWizardActivity extends AppCompatActivity implements View
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         mImm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);

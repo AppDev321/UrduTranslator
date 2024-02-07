@@ -22,7 +22,7 @@
     <color name="colorPrimary">#36a854</color>
     <color name="colorPrimaryDark">#298340</color>
     <color name="colorAccent">#249f44</color>
-
+    <color name="lightPrimary">#8036A854</color>
     <color name="transparent_white">#80abaaaa</color>
 
     <!-- Color resources for IceCreamSandwich theme. Base color = 33B5E5 -->
@@ -85,7 +85,7 @@
     <!-- Color resources for setup wizard and tutorial -->
     <color name="setup_background">#FFEBEBEB</color>
     <color name="setup_text_dark">#FF707070</color>
-    <color name="setup_text_action">@android:color/holo_blue_light</color>
+    <color name="setup_text_action">@color/colorPrimary</color>
     <color name="setup_step_background">@android:color/background_light</color>
     <color name="setup_welcome_video_margin_color">#FFCCCCCC</color>
     <!-- Accent color for the notification. We need to match this to the OS build -->
