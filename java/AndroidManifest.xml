@@ -34,6 +34,7 @@
         android:theme="@style/Theme.App.Starting"
         android:icon="@drawable/splash_icon"
         android:label="@string/dic_app_name"
+        android:resizeableActivity="true"
         android:supportsRtl="true">
 
         <activity

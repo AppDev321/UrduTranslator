@@ -21,7 +21,7 @@ class LearnFragment :
     BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding::inflate),
     ItemClickListener {
 
-    private val learnViewModel : LearnViewModel by viewModels()
+    private val learnViewModel: LearnViewModel by viewModels()
 
     private lateinit var settingAdapter: SettingAdapter
 
@@ -40,9 +40,10 @@ class LearnFragment :
 
     override fun onItemClick(position: Int, view: View) {
         super.onItemClick(position, view)
-
+        val data = settingsDataFactory.getLearningTypes()[position]
         val bundle = Bundle()
-        bundle.putSerializable(DetailActivity.OBJECTID,position)
+        bundle.putSerializable(LearnSubFragment.ITEM_POS, position)
+        bundle.putSerializable(LearnSubFragment.ITEM_NAME, data.name)
         bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_learn_to_detail)
         findNavController().navigate(R.id.action_learn_to_detail, bundle)
     }

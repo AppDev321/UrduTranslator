@@ -7,8 +7,8 @@ import javax.inject.Inject
 class LearnRepoImpl @Inject constructor(
     private val learnDao: LearnDao
 ) : LearnRepo {
-    override suspend fun getCategoryList(): List<LearnEntity> {
-        return learnDao.getCategoryList()
+    override suspend fun getCategoryDetailList(name:String): List<LearnEntity> {
+        return learnDao.getCategoryDetailList(name)
     }
 
     override suspend fun getDetailBySubCategory(name: String): List<LearnEntity> {
@@ -17,5 +17,21 @@ class LearnRepoImpl @Inject constructor(
 
     override suspend fun getConversations(): List<LearnEntity> {
         return learnDao.getConversations()
+    }
+
+    override suspend fun getGrammars(): List<LearnEntity> {
+       return learnDao.getGrammarList()
+    }
+
+    override suspend fun getPhrases(): List<LearnEntity> {
+        return learnDao.getPhrases()
+    }
+
+    override suspend fun getWords(): List<LearnEntity> {
+        return learnDao.getWords()
+    }
+
+    override suspend fun getTenses(): List<LearnEntity> {
+        return learnDao.getTenses()
     }
 }

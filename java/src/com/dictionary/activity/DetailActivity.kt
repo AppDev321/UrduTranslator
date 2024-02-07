@@ -1,6 +1,7 @@
 package com.dictionary.activity
 
 import android.content.Intent
+import android.icu.util.MeasureUnit.ITEM
 import android.os.Bundle
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
@@ -16,6 +17,8 @@ import com.core.utils.Utils.serializable
 import com.dictionary.fragment.DictionaryDetailFragment
 import com.dictionary.fragment.HistoryFragment
 import com.dictionary.fragment.LearnSubFragment
+import com.dictionary.fragment.LearnSubFragment.Companion.ITEM_NAME
+import com.dictionary.fragment.LearnSubFragment.Companion.ITEM_POS
 import com.dictionary.fragment.ZoomFragment
 import com.dictionary.fragment.painter.UrduEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +36,6 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
         const val SET_FAVOURITE_VIEW_TYPE = "view_type"
         const val SET_ENTITY_MODEL = "entity_model"
         const val IMAGEPATH = ""
-        const val OBJECTID = "OBJECT_ID"
     }
 
 
@@ -84,9 +86,12 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
 
             R.id.action_learn_to_detail ->
             {
-                val id = intent.extras?.getInt(OBJECTID)
-                val argument = NavArgument.Builder().setDefaultValue(id).build()
-                navGraph.addArgument(OBJECTID, argument)
+                val id = intent.extras?.getInt(ITEM_POS)
+                val name = intent.extras?.getString(ITEM_NAME)
+                val idArgument = NavArgument.Builder().setDefaultValue(id).build()
+                val nameArgument = NavArgument.Builder().setDefaultValue(name).build()
+                navGraph.addArgument(ITEM_POS, idArgument)
+                navGraph.addArgument(ITEM_NAME,nameArgument)
                 R.id.learnSubFragment
             }
             else -> {

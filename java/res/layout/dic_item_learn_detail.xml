@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="@dimen/card_round_corner"
+    app:cardElevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/hTranslateMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:id="@+id/hHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_4sdp"
+                app:layout_constraintBottom_toTopOf="@+id/seprator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/txtEng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:scrollHorizontally="true"
+                    android:textColor="@color/black"
+                    android:text="English"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <include
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:id="@+id/engViewItems"
+                    layout="@layout/dic_common_translate_action_views"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEng"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:id="@+id/seprator"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hHeading"
+                android:layout_marginVertical="@dimen/_10sdp"
+           />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hCenter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:layout_margin="@dimen/_4sdp"
+                app:layout_constraintTop_toBottomOf="@+id/seprator"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtUrdu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Urdu"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:id="@+id/urduViewItems"
+                    layout="@layout/dic_common_translate_action_views"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtUrdu"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

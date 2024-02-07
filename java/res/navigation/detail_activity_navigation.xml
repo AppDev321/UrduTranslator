@@ -88,6 +88,27 @@
         android:id="@+id/learnSubFragment"
         android:name="com.dictionary.fragment.LearnSubFragment"
         tools:layout="@layout/dic_more_fragment">
+        <action
+            android:id="@+id/action_sub_to_detail"
+            app:destination="@id/learDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/learDetailFragment"
+        android:name="com.dictionary.fragment.LearnDetailFragment"
+        tools:layout="@layout/dic_more_fragment">
+
+       <!-- <action
+            android:id="@+id/action_detail_to_sub"
+            app:destination="@id/learDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />-->
 
     </fragment>
 </navigation>
