@@ -1,5 +1,8 @@
 package com.core.base
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -13,6 +16,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -29,6 +34,7 @@ import com.core.utils.DialogManager
 import com.core.utils.Inflate
 import com.core.utils.PreferenceManager
 import com.core.utils.ResourceHelper
+import com.dictionary.utils.GoogleTTS
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -75,8 +81,14 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
 
     private var textToSpeech: TextToSpeech? = null
 
-
+    @Inject
+    lateinit var googleTTS: GoogleTTS
     protected abstract fun initUserInterface(view: View?)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,6 +111,21 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         _binding = null
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    stopTextToSpeech()
+                    if (isEnabled) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            }
+            )
+    }
 
     fun showPermissionSettingsDialog() {
         if (requireActivity().isFinishing.not() && requireActivity().isDestroyed.not()) {
@@ -178,19 +205,38 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         })
     }
 
-    private fun stopTextToSpeech() {
+     fun stopTextToSpeech() {
         if (textToSpeech?.isSpeaking == true) {
             textToSpeech?.stop()
         }
-        // viewDataBinding.fabStopPlay.hide()
+
+         if (::googleTTS.isInitialized) {
+             googleTTS.stopMediaFile()
+         }
     }
 
-    fun setTextToSpeak(msg: String,locale: Locale) {
+    fun pasteCopiedText(copiedText:(String)->Unit) {
+        val clipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        if (clipboardManager.hasPrimaryClip()) {
+            val clipData: ClipData = clipboardManager.primaryClip!!
+            val item = clipData.getItemAt(0)
+            val clipboardText = item.text.toString()
+            copiedText(clipboardText)
+        } else {
+            showToast("No data copied to the clipboard.")
+        }
+    }
+
+    fun setTextToSpeak(msg: String, locale: Locale) {
         val result = textToSpeech?.setLanguage(locale)
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            showToast( "Language not supported")
-        }
-        else {
+            googleTTS.playMediaFile(msg,
+                locale.language,
+                onException = null,
+                setOnErrorListener = {
+                    showToast(it)
+                })
+        } else {
             textToSpeech?.speak(
                 msg,
                 TextToSpeech.QUEUE_FLUSH,

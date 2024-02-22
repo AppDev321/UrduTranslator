@@ -10,7 +10,9 @@ import com.android.inputmethod.latin.databinding.DicWordFragmentBinding
 import com.core.base.BaseFragment
 import com.core.extensions.empty
 import com.core.extensions.safeGet
+import com.core.utils.setOnSingleClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class WordFragment : BaseFragment<DicWordFragmentBinding>(DicWordFragmentBinding::inflate) {
@@ -28,8 +30,14 @@ class WordFragment : BaseFragment<DicWordFragmentBinding>(DicWordFragmentBinding
         val wordModel = preferenceManager.getWordOfTheDay()
         wordModel?.let {
             viewDataBinding.apply {
-                txtQuestion.text = wordModel.question.safeGet()
-                txtMeaning.text = wordModel.meaning.safeGet()
+                txtEng.text = wordModel.question.safeGet()
+                txtUrdu.text = wordModel.meaning.safeGet()
+                txtEng.setOnSingleClickListener{view->
+                    setTextToSpeak(it.question, Locale("en"))
+                }
+                txtUrdu.setOnSingleClickListener{view->
+                    setTextToSpeak(it.meaning, Locale("ur"))
+                }
             }
         }
 

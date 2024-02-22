@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.inputmethod.latin.R
@@ -29,6 +30,10 @@ import com.dictionary.navigator.TranslateNavigator
 import com.dictionary.viewmodel.ConversationViewModel
 import com.dictionary.viewmodel.TranslateViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -122,26 +127,27 @@ class ConversationFragment :
 
     override fun displayConversationList(item: List<ConversationEntity>) {
         conversationAdapter.publishListToAdapter(item)
-        val targetPosition = conversationAdapter.itemCount - 1
-        if (targetPosition >= 0) {
-            viewDataBinding.recConversation.scrollToPosition(targetPosition)
+        lifecycleScope.launch(Dispatchers.Default) {
+            delay(500)
+            withContext(Dispatchers.Main){
+                scrollListToBottom()
+            }
         }
+    }
 
+   private fun scrollListToBottom()
+    {
+        val targetPosition = conversationAdapter.itemCount
+        viewDataBinding.recConversation.apply {
+            post {
+                smoothScrollToPosition(targetPosition)
+            }
+        }
     }
 
     override fun addConversation(item: ConversationEntity) {
         conversationAdapter.publishListToAdapter(item)
-        val targetPosition = 0//conversationAdapter.itemCount - 1
-        viewDataBinding.recConversation.apply {
-            post{
-                val lastChild: View? =
-                    layoutManager?.findViewByPosition((layoutManager?.itemCount ?: 0) - 1)
-                if (lastChild != null) {
-                    layoutManager?.scrollToPosition(targetPosition)
-                }
-            }
-
-        }
+        scrollListToBottom()
     }
 
     private fun startMicReading(lang: String) {
@@ -207,6 +213,10 @@ class ConversationFragment :
             isRightSide = translateView.isRightSideConversationMicOpen
         )
         conversationViewModel.addConversationData(model)
+        setTextToSpeak(
+            model.outputText.toString(),
+            Locale(model.outputLangCode.toString())
+        )
     }
 
 

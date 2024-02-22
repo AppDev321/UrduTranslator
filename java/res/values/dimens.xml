@@ -13,4 +13,8 @@
 
     <dimen name="card_round_corner">@dimen/_10sdp</dimen>
     <dimen name="card_elevation">3dp</dimen>
+
+
+    <dimen name="font_size_translated_text_title">@dimen/_13sdp</dimen>
+    <dimen name="font_size_translated_text">@dimen/_15sdp</dimen>
 </resources>

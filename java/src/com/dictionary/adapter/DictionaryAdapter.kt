@@ -14,18 +14,19 @@ import com.dictionary.viewholder.DictionaryViewHolder
 
 class DictionaryAdapter(
     itemClickListener: ItemClickListener
+
 ) :
     BaseRecyclerAdapter<DictionaryEntity>(itemClickListener), Filterable {
     var searchText: String = String.empty
     var originList = listOf<DictionaryEntity>()
-
+    private var isEnglishDictionaryData: Boolean = true
     override fun createBaseViewHolder(parent: ViewGroup, viewType: Int) =
         DictionaryViewHolder(
             DicItemDictionaryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ), isEnglishDictionaryData
         )
 
     @SuppressLint("NotifyDataSetChanged")
@@ -33,6 +34,11 @@ class DictionaryAdapter(
         if (dataItems.isNotEmpty())
             dataItems.clear()
         dataItems.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun languageChanged(isEng: Boolean) {
+        isEnglishDictionaryData = isEng
         notifyDataSetChanged()
     }
 

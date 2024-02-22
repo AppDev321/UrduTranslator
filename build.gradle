@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.dictornary.urdu"
-        minSdk 24
+        minSdkVersion 24
         targetSdk 34
 
         versionCode 1

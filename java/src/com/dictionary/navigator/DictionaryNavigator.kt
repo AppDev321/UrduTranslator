@@ -5,6 +5,6 @@ import com.core.interfaces.BaseNavigator
 
 interface DictionaryNavigator : BaseNavigator {
 
-    fun displayDictionaryDataList(item:List<DictionaryEntity>)
+    fun displayDictionaryDataList(item:List<DictionaryEntity>,isEnglish :Boolean)
 
 }

@@ -2,6 +2,7 @@ package com.dictionary.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ class DictionaryFragment :
 
     private val dictionaryViewModel: DictionaryViewModel by viewModels()
     private lateinit var dictionaryAdapter: DictionaryAdapter
+    private var dicDataList = arrayListOf<DictionaryEntity>()
+    private var isEnglishDic = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,18 +41,30 @@ class DictionaryFragment :
             layoutManager = LinearLayoutManager(activity)
             adapter = dictionaryAdapter
         }
+
         dictionaryViewModel.getDictionaryData()
 
-        viewDataBinding.btnQuizOftheDay.setOnSingleClickListener{
-            val bundle = Bundle()
-            bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_quiz)
-            findNavController().navigate(R.id.action_dic_to_quiz,bundle)
+        viewDataBinding.langToggle.setOnCheckedChangeListener { group, checkedId ->
+            val checkedRadioButton: RadioButton = group.findViewById(checkedId)
+            val selectedText: String = checkedRadioButton.text.toString()
+            dictionaryAdapter =  DictionaryAdapter(this)
+            viewDataBinding.recDictionary.adapter = dictionaryAdapter
+            isEnglishDic = selectedText == "English"
+            dictionaryAdapter.languageChanged(isEnglishDic)
+            dictionaryAdapter.setItems(dicDataList)
+
         }
 
-        viewDataBinding.btnWordOftheDay.setOnSingleClickListener{
+        viewDataBinding.btnQuizOftheDay.setOnSingleClickListener {
+            val bundle = Bundle()
+            bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_quiz)
+            findNavController().navigate(R.id.action_dic_to_quiz, bundle)
+        }
+
+        viewDataBinding.btnWordOftheDay.setOnSingleClickListener {
             val bundle = Bundle()
             bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_word)
-            findNavController().navigate(R.id.action_dic_to_word,bundle)
+            findNavController().navigate(R.id.action_dic_to_word, bundle)
         }
 
         viewDataBinding.edSearchBar.addTextChangedListener(
@@ -60,9 +75,9 @@ class DictionaryFragment :
                     dictionaryAdapter.filter.filter(it)
                     if (it.isEmpty()) {
 
-                    //    setAdapter(countrySelectFragmentViewModel.getTotalCountryList())
+                        //    setAdapter(countrySelectFragmentViewModel.getTotalCountryList())
                     } else {
-                     //   countrySelectFragmentViewModel.searchCountry(queryText.trim())
+                        //   countrySelectFragmentViewModel.searchCountry(queryText.trim())
                     }
                 }
             }
@@ -73,20 +88,28 @@ class DictionaryFragment :
 
     override fun setProgressVisibility(visibility: Int) {
         super.setProgressVisibility(visibility)
-        viewDataBinding.apply{
-           loadingProgressBar.visibility = visibility
+        if(isAdded) {
+            viewDataBinding.apply {
+                loadingProgressBar.visibility = visibility
+            }
         }
     }
 
-    override fun displayDictionaryDataList(item: List<DictionaryEntity>) {
+    override fun displayDictionaryDataList(item: List<DictionaryEntity>, isEnglish: Boolean) {
+        dictionaryAdapter.clearItems()
         dictionaryAdapter.setItems(ArrayList(item))
         dictionaryAdapter.originList = dictionaryAdapter.getItems()
+        dicDataList = dictionaryAdapter.getItems()
     }
 
     override fun onItemClick(position: Int, view: View) {
         super.onItemClick(position, view)
         val bundle = Bundle()
-        bundle.putSerializable(DetailActivity.SET_ENTITY_MODEL, dictionaryAdapter.getItems()[position])
+        bundle.putSerializable(
+            DetailActivity.SET_ENTITY_MODEL,
+            dictionaryAdapter.getItems()[position]
+        )
+        bundle.putBoolean(DetailActivity.SET_FAVOURITE_VIEW_TYPE,isEnglishDic)
         bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_detail_dic)
         findNavController().navigate(R.id.action_dic_to_detail_dic, bundle)
     }

@@ -33,6 +33,48 @@
             android:textSize="@dimen/_14sdp" />
     </androidx.cardview.widget.CardView>
 
+    <RadioGroup
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        android:checkedButton="@+id/btnEng"
+        android:id="@+id/langToggle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/pink_outline"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:id="@+id/btnEng"
+            android:background="@drawable/dic_toggle_bg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="English"
+            android:textColor="@drawable/dic_toggle_text" />
+
+        <RadioButton
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/btnUrdu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/dic_toggle_bg"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Urdu"
+            android:textColor="@drawable/dic_toggle_text" />
+    </RadioGroup>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="10dp"
         android:id="@+id/recDictionary"
@@ -42,7 +84,7 @@
         tools:listitem="@layout/dic_item_dictionary"
         android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/btnWordOftheDay"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+        app:layout_constraintTop_toBottomOf="@+id/langToggle" />
 
 
     <androidx.core.widget.ContentLoadingProgressBar

@@ -22,7 +22,7 @@ class DictionaryViewModel @Inject constructor(
 ) : BaseViewModel<DictionaryNavigator>() {
 
     @Synchronized
-    fun getDictionaryData() {
+    fun getDictionaryData( isEnglish:Boolean = true) {
         getNavigator()?.setProgressVisibility(View.VISIBLE)
         viewModelScope.launch(ioDispatcher) {
             val list = async {
@@ -31,7 +31,7 @@ class DictionaryViewModel @Inject constructor(
             withContext(mainDispatcher)
             {
                 getNavigator()?.setProgressVisibility(View.GONE)
-                getNavigator()?.displayDictionaryDataList(list)
+                getNavigator()?.displayDictionaryDataList(list,isEnglish)
             }
         }
 

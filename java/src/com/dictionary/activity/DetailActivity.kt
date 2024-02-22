@@ -66,8 +66,12 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
             }
             R.id.action_dic_to_detail_dic -> {
                 val dictionaryEntity = intent.extras?.serializable(SET_ENTITY_MODEL) as DictionaryEntity?
+                val isEnglishView = intent.extras?.getBoolean(SET_FAVOURITE_VIEW_TYPE) as Boolean
+
                 val argument = NavArgument.Builder().setDefaultValue(dictionaryEntity).build()
+                val argument2 = NavArgument.Builder().setDefaultValue(isEnglishView).build()
                 navGraph.addArgument(DictionaryDetailFragment.dictionaryEntityArgs, argument)
+                navGraph.addArgument(DictionaryDetailFragment.dictionaryViewEntityArgs, argument2)
                 R.id.dictionaryDetailViewFragment
             }
             R.id.action_dic_to_quiz -> {

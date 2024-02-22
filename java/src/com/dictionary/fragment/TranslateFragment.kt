@@ -147,6 +147,7 @@ class TranslateFragment :
 
             hTranslationLayout.hClose.setOnSingleClickListener {
                 translatedView.hide()
+                stopTextToSpeech()
             }
 
             hTranslationLayout.commonActionViews.apply {
@@ -155,8 +156,10 @@ class TranslateFragment :
                         historyViewModel.performFavAction(it)
                     }
                 }
-                btnCopy.setOnSingleClickListener {
-                    context?.copyTextToClipboard(hTranslationLayout.txtTranslation.text.toString())
+                btnPaste.setOnSingleClickListener {
+                    pasteCopiedText { text ->
+                        edTranslate.setText(text)
+                    }
                 }
                 btnCommonSpeaker.setOnSingleClickListener {
                     setTextToSpeak(
