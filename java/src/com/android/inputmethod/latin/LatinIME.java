@@ -755,13 +755,18 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
     @Override
     public void onDestroy() {
-        mDictionaryFacilitator.closeDictionaries();
-        mSettings.onDestroy();
-        unregisterReceiver(mHideSoftInputReceiver);
-        unregisterReceiver(mRingerModeChangeReceiver);
-        unregisterReceiver(mDictionaryPackInstallReceiver);
-        unregisterReceiver(mDictionaryDumpBroadcastReceiver);
-        mStatsUtilsManager.onDestroy(this /* context */);
+        try {
+            mDictionaryFacilitator.closeDictionaries();
+            mSettings.onDestroy();
+            unregisterReceiver(mHideSoftInputReceiver);
+            unregisterReceiver(mRingerModeChangeReceiver);
+            unregisterReceiver(mDictionaryPackInstallReceiver);
+            unregisterReceiver(mDictionaryDumpBroadcastReceiver);
+            mStatsUtilsManager.onDestroy(this /* context */);
+        }
+        catch (Exception e)
+        {}
+
         super.onDestroy();
     }
 
