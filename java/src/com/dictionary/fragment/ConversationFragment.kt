@@ -21,6 +21,7 @@ import com.core.database.entity.HistoryEntity
 import com.core.extensions.copyTextToClipboard
 import com.core.extensions.safeGet
 import com.core.utils.setOnSingleClickListener
+import com.dictionary.activity.DetailActivity
 import com.dictionary.adapter.ConversationAdapter
 import com.dictionary.dialog.LanguageSelectDialog
 import com.dictionary.events.ConversationClickEvent
@@ -100,14 +101,18 @@ class ConversationFragment :
             hLeftLanguage.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putBoolean(LanguageSelectDialog.KEY_LANGUAGE_SIDE, true)
-                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+                //findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+                bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_move_to_language_select)
+                findNavController().navigate(R.id.action_move_to_language_select,bundle)
             }
 
 
             hRightLanguage.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putBoolean(LanguageSelectDialog.KEY_LANGUAGE_SIDE, false)
-                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+              //  findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+                bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_move_to_language_select)
+                findNavController().navigate(R.id.action_move_to_language_select,bundle)
             }
 
             hSplitLanguages.setOnSingleClickListener {

@@ -111,4 +111,11 @@
             app:popExitAnim="@anim/slide_out_right" />-->
 
     </fragment>
+
+    <fragment
+        android:id="@+id/selectLanguageFragment"
+        android:name="com.dictionary.fragment.LanguageSelectFragment"
+        tools:layout="@layout/dic_select_language_bottom_sheet">
+
+    </fragment>
 </navigation>

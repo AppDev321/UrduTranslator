@@ -70,6 +70,14 @@
             app:popExitAnim="@anim/slide_out_right" />
 
 
+        <action
+            android:id="@+id/action_move_to_language_select"
+            app:destination="@+id/detail_activity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
 
     <fragment
@@ -80,6 +88,14 @@
         <action
             android:id="@+id/action_move_to_language_dialog"
             app:destination="@id/selectLanguageBottomSheetDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_move_to_language_select"
+            app:destination="@+id/detail_activity"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/slide_in_left"
@@ -153,6 +169,9 @@
             android:id="@+id/action_show_image_choose_dialog"
             app:destination="@id/imagePickerDialog" />
     </fragment>
+
+
+
 
     <dialog
         android:id="@+id/imagePickerDialog"

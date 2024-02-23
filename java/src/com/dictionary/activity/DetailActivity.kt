@@ -16,6 +16,7 @@ import com.core.database.entity.HistoryEntity
 import com.core.utils.Utils.serializable
 import com.dictionary.fragment.DictionaryDetailFragment
 import com.dictionary.fragment.HistoryFragment
+import com.dictionary.fragment.LanguageSelectFragment
 import com.dictionary.fragment.LearnSubFragment
 import com.dictionary.fragment.LearnSubFragment.Companion.ITEM_NAME
 import com.dictionary.fragment.LearnSubFragment.Companion.ITEM_POS
@@ -35,6 +36,8 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
         const val DEFAULT_NAV_HOST_KEY = "nav_host_id"
         const val SET_FAVOURITE_VIEW_TYPE = "view_type"
         const val SET_ENTITY_MODEL = "entity_model"
+
+
         const val IMAGEPATH = ""
     }
 
@@ -98,6 +101,16 @@ class DetailActivity : BaseActivity<DicDetailActivityBinding>(DicDetailActivityB
                 navGraph.addArgument(ITEM_NAME,nameArgument)
                 R.id.learnSubFragment
             }
+
+            R.id.action_move_to_language_select ->
+            {
+                val side = intent.extras?.getBoolean(LanguageSelectFragment.KEY_LANGUAGE_SIDE)
+                val argument = NavArgument.Builder().setDefaultValue(side).build()
+                navGraph.addArgument(LanguageSelectFragment.KEY_LANGUAGE_SIDE, argument)
+                R.id.selectLanguageFragment
+            }
+
+
             else -> {
                 val historyEntity = intent.extras?.serializable(SET_ENTITY_MODEL) as HistoryEntity?
                 val argument = NavArgument.Builder().setDefaultValue(historyEntity).build()

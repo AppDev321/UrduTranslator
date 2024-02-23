@@ -101,14 +101,18 @@ class TranslateFragment :
             hLeftLanguage.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putBoolean(KEY_LANGUAGE_SIDE, true)
-                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+             //   findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+                bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_move_to_language_select)
+                findNavController().navigate(R.id.action_move_to_language_select,bundle)
             }
 
 
             hRightLanguage.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putBoolean(KEY_LANGUAGE_SIDE, false)
-                findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+               // findNavController().navigate(R.id.action_move_to_language_dialog, bundle)
+                bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_move_to_language_select)
+                findNavController().navigate(R.id.action_move_to_language_select,bundle)
             }
 
             edTranslate.addTextChangedListener(TextQueryListenerManager(
