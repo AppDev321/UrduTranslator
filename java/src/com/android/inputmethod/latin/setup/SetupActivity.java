@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import com.android.inputmethod.latin.R;
+import com.android.inputmethod.latin.settings.SettingsActivity;
 import com.android.inputmethod.latin.utils.LeakGuardHandlerWrapper;
 import com.android.inputmethod.latin.utils.UncachedInputMethodManagerUtils;
 
@@ -159,7 +160,7 @@ public final class SetupActivity extends AppCompatActivity {
     }
     void invokeSetupWizardOfThisIme() {
         final Intent intent = new Intent();
-        intent.setClass(this, SetupWizardActivity.class);
+        intent.setClass(this, SettingsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -1,11 +1,15 @@
 package com.dictionary.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.inputmethod.latin.R
@@ -14,6 +18,7 @@ import com.android.inputmethod.latin.setup.SetupActivity
 import com.core.base.BaseFragment
 import com.core.extensions.showShortToast
 import com.core.interfaces.ItemClickListener
+import com.core.utils.PermissionUtilsNew
 import com.dictionary.activity.DetailActivity
 import com.dictionary.activity.MainActivity
 import com.dictionary.adapter.SettingAdapter
@@ -22,6 +27,11 @@ import com.dictionary.dialog.ImageChooserDialog.Companion.PROFILE_PHOTO_SELECTIO
 import com.dictionary.model.SettingsDataFactory
 import com.dictionary.utils.CHOOSER
 import com.dictionary.utils.getCameraOutputUri
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -49,10 +59,7 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
         super.onItemClick(position, view)
 
         if (position == 0) {
-            activity?.let {
-                it as MainActivity
-                startActivity(Intent(it, SetupActivity::class.java))
-            }
+           checkAudioPermission()
         } else {
             initBottomSheetListener()
             findNavController().navigate(R.id.action_show_image_choose_dialog)
@@ -145,6 +152,54 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
         findNavController().currentBackStackEntry?.savedStateHandle?.remove<String>(
             PROFILE_PHOTO_SELECTION_OPTION
         )
+    }
+
+    private fun checkAudioPermission()
+    {
+        if (PermissionUtilsNew.hasAudioPermission()) {
+            activity?.let {
+                it as MainActivity
+                startActivity(Intent(it, SetupActivity::class.java))
+            }
+        } else {
+            activity?.let {
+                checkListOfPermission(
+                    it,
+                    listOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE)
+                )
+            }
+        }
+    }
+
+
+    private fun checkListOfPermission(
+        activity: Activity,
+        permissions: Collection<String>
+    ) {
+        Dexter.withContext(activity)
+            .withPermissions(permissions)
+            .withListener(object : MultiplePermissionsListener {
+
+                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+
+                    p0?.let {
+                        if (it.areAllPermissionsGranted()) {
+                            startActivity(Intent(activity, SetupActivity::class.java))
+
+                        } else if (it.isAnyPermissionPermanentlyDenied) {
+                            PermissionUtilsNew.showPermissionSettingsDialog(activity)
+                        }
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: MutableList<PermissionRequest>?,
+                    permissionToken: PermissionToken?
+                ) {
+                    permissionToken?.continuePermissionRequest()
+                }
+            })
+            .check()
     }
 
 }
