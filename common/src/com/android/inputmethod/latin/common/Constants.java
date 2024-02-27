@@ -248,6 +248,8 @@ public final class Constants {
     // Code value representing the code is not specified.
     public static final int CODE_UNSPECIFIED = -15;
 
+    public static final int CODE_SPEAK_TO_TRANSLATE = -999;
+
     public static boolean isLetterCode(final int code) {
         return code >= CODE_SPACE;
     }
@@ -255,28 +257,45 @@ public final class Constants {
     @Nonnull
     public static String printableCode(final int code) {
         switch (code) {
-        case CODE_SHIFT: return "shift";
-        case CODE_CAPSLOCK: return "capslock";
-        case CODE_SWITCH_ALPHA_SYMBOL: return "symbol";
-        case CODE_OUTPUT_TEXT: return "text";
-        case CODE_DELETE: return "delete";
-        case CODE_SETTINGS: return "settings";
-        case CODE_SHORTCUT: return "shortcut";
-        case CODE_ACTION_NEXT: return "actionNext";
-        case CODE_ACTION_PREVIOUS: return "actionPrevious";
-        case CODE_LANGUAGE_SWITCH: return "languageSwitch";
-        case CODE_EMOJI: return "emoji";
-        case CODE_SHIFT_ENTER: return "shiftEnter";
-        case CODE_ALPHA_FROM_EMOJI: return "alpha";
-        case CODE_UNSPECIFIED: return "unspec";
-        case CODE_TAB: return "tab";
-        case CODE_ENTER: return "enter";
-        case CODE_SPACE: return "space";
-        default:
-            if (code < CODE_SPACE) return String.format("\\u%02X", code);
-            if (code < 0x100) return String.format("%c", code);
-            if (code < 0x10000) return String.format("\\u%04X", code);
-            return String.format("\\U%05X", code);
+            case CODE_SHIFT:
+                return "shift";
+            case CODE_CAPSLOCK:
+                return "capslock";
+            case CODE_SWITCH_ALPHA_SYMBOL:
+                return "symbol";
+            case CODE_OUTPUT_TEXT:
+                return "text";
+            case CODE_DELETE:
+                return "delete";
+            case CODE_SETTINGS:
+                return "settings";
+            case CODE_SHORTCUT:
+                return "shortcut";
+            case CODE_ACTION_NEXT:
+                return "actionNext";
+            case CODE_ACTION_PREVIOUS:
+                return "actionPrevious";
+            case CODE_LANGUAGE_SWITCH:
+                return "languageSwitch";
+            case CODE_EMOJI:
+                return "emoji";
+            case CODE_SHIFT_ENTER:
+                return "shiftEnter";
+            case CODE_ALPHA_FROM_EMOJI:
+                return "alpha";
+            case CODE_UNSPECIFIED:
+                return "unspec";
+            case CODE_TAB:
+                return "tab";
+            case CODE_ENTER:
+                return "enter";
+            case CODE_SPACE:
+                return "space";
+            default:
+                if (code < CODE_SPACE) return String.format("\\u%02X", code);
+                if (code < 0x100) return String.format("%c", code);
+                if (code < 0x10000) return String.format("\\u%04X", code);
+                return String.format("\\U%05X", code);
         }
     }
 

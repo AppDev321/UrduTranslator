@@ -21,7 +21,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import androidx.core.view.ViewCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -37,6 +36,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.view.ViewCompat;
 
 import com.android.inputmethod.accessibility.AccessibilityUtils;
 import com.android.inputmethod.keyboard.Keyboard;
@@ -59,7 +60,9 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         OnLongClickListener {
     public interface Listener {
         public void showImportantNoticeContents();
+
         public void pickSuggestionManually(SuggestedWordInfo word);
+
         public void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat);
     }
 
@@ -92,7 +95,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         private final View mImportantNoticeStrip;
 
         public StripVisibilityGroup(final View suggestionStripView,
-                final ViewGroup suggestionsStrip, final View importantNoticeStrip) {
+                                    final ViewGroup suggestionsStrip, final View importantNoticeStrip) {
             mSuggestionStripView = suggestionStripView;
             mSuggestionsStrip = suggestionsStrip;
             mImportantNoticeStrip = importantNoticeStrip;
@@ -124,6 +127,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     /**
      * Construct a {@link SuggestionStripView} for showing suggestions to be picked by the user.
+     *
      * @param context
      * @param attrs
      */
@@ -132,14 +136,15 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     }
 
     public SuggestionStripView(final Context context, final AttributeSet attrs,
-            final int defStyle) {
+                               final int defStyle) {
         super(context, attrs, defStyle);
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.suggestions_strip, this);
 
-        mSuggestionsStrip = (ViewGroup)findViewById(R.id.suggestions_strip);
-        mVoiceKey = (ImageButton)findViewById(R.id.suggestions_strip_voice_key);
+        mSuggestionsStrip = (ViewGroup) findViewById(R.id.suggestions_strip);
+        mVoiceKey = (ImageButton) findViewById(R.id.suggestions_strip_voice_key);
+
         mImportantNoticeStrip = findViewById(R.id.important_notice_strip);
         mStripVisibilityGroup = new StripVisibilityGroup(this, mSuggestionsStrip,
                 mImportantNoticeStrip);
@@ -162,7 +167,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
                 context, attrs, defStyle, mWordViews, mDividerViews, mDebugInfoViews);
 
         mMoreSuggestionsContainer = inflater.inflate(R.layout.more_suggestions, null);
-        mMoreSuggestionsView = (MoreSuggestionsView)mMoreSuggestionsContainer
+        mMoreSuggestionsView = (MoreSuggestionsView) mMoreSuggestionsContainer
                 .findViewById(R.id.more_suggestions_view);
         mMoreSuggestionsBuilder = new MoreSuggestions.Builder(context, mMoreSuggestionsView);
 
@@ -182,18 +187,29 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     /**
      * A connection back to the input method.
+     *
      * @param listener
      */
     public void setListener(final Listener listener, final View inputView) {
         mListener = listener;
-        mMainKeyboardView = (MainKeyboardView)inputView.findViewById(R.id.keyboard_view);
+        mMainKeyboardView = (MainKeyboardView) inputView.findViewById(R.id.keyboard_view);
     }
 
     public void updateVisibility(final boolean shouldBeVisible, final boolean isFullscreenMode) {
         final int visibility = shouldBeVisible ? VISIBLE : (isFullscreenMode ? GONE : INVISIBLE);
         setVisibility(visibility);
-        final SettingsValues currentSettingsValues = Settings.getInstance().getCurrent();
-        mVoiceKey.setVisibility(currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE);
+//        final SettingsValues currentSettingsValues = Settings.getInstance().getCurrent();
+//        mVoiceKey.setVisibility(currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE);
+    }
+
+    public void updateRecognizerProgressVisibility(final boolean shouldBeVisible) {
+        final int visibility = shouldBeVisible ? VISIBLE : GONE;
+
+        if (visibility == VISIBLE) {
+            mVoiceKey.setEnabled(false);
+        } else {
+            mVoiceKey.setEnabled(true);
+        }
     }
 
     public void setSuggestions(final SuggestedWords suggestedWords, final boolean isRtlLanguage) {
@@ -246,7 +262,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         for (final View debugInfoView : mDebugInfoViews) {
             final ViewParent parent = debugInfoView.getParent();
             if (parent instanceof ViewGroup) {
-                ((ViewGroup)parent).removeView(debugInfoView);
+                ((ViewGroup) parent).removeView(debugInfoView);
             }
         }
     }
@@ -266,21 +282,21 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
     private final MoreKeysPanel.Controller mMoreSuggestionsController =
             new MoreKeysPanel.Controller() {
-        @Override
-        public void onDismissMoreKeysPanel() {
-            mMainKeyboardView.onDismissMoreKeysPanel();
-        }
+                @Override
+                public void onDismissMoreKeysPanel() {
+                    mMainKeyboardView.onDismissMoreKeysPanel();
+                }
 
-        @Override
-        public void onShowMoreKeysPanel(final MoreKeysPanel panel) {
-            mMainKeyboardView.onShowMoreKeysPanel(panel);
-        }
+                @Override
+                public void onShowMoreKeysPanel(final MoreKeysPanel panel) {
+                    mMainKeyboardView.onShowMoreKeysPanel(panel);
+                }
 
-        @Override
-        public void onCancelMoreKeysPanel() {
-            dismissMoreSuggestionsPanel();
-        }
-    };
+                @Override
+                public void onCancelMoreKeysPanel() {
+                    dismissMoreSuggestionsPanel();
+                }
+            };
 
     public boolean isShowingMoreSuggestionPanel() {
         return mMoreSuggestionsView.isShowingInParent();
@@ -311,7 +327,7 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         final int maxWidth = stripWidth - container.getPaddingLeft() - container.getPaddingRight();
         final MoreSuggestions.Builder builder = mMoreSuggestionsBuilder;
         builder.layout(mSuggestedWords, mStartIndexOfMoreSuggestions, maxWidth,
-                (int)(maxWidth * layoutHelper.mMinMoreSuggestionsWidth),
+                (int) (maxWidth * layoutHelper.mMinMoreSuggestionsWidth),
                 layoutHelper.getMaxMoreSuggestionsRow(), parentKeyboard);
         mMoreSuggestionsView.setKeyboard(builder.build());
         container.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -341,15 +357,15 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
     private final GestureDetector mMoreSuggestionsSlidingDetector;
     private final GestureDetector.OnGestureListener mMoreSuggestionsSlidingListener =
             new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onScroll(MotionEvent down, MotionEvent me, float deltaX, float deltaY) {
-            final float dy = me.getY() - down.getY();
-            if (deltaY > 0 && dy < 0) {
-                return showMoreSuggestions();
-            }
-            return false;
-        }
-    };
+                @Override
+                public boolean onScroll(MotionEvent down, MotionEvent me, float deltaX, float deltaY) {
+                    final float dy = me.getY() - down.getY();
+                    if (deltaY > 0 && dy < 0) {
+                        return showMoreSuggestions();
+                    }
+                    return false;
+                }
+            };
 
     @Override
     public boolean onInterceptTouchEvent(final MotionEvent me) {
@@ -358,8 +374,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         }
         // Detecting sliding up finger to show {@link MoreSuggestionsView}.
         if (!mMoreSuggestionsView.isShowingInParent()) {
-            mLastX = (int)me.getX();
-            mLastY = (int)me.getY();
+            mLastX = (int) me.getX();
+            mLastY = (int) me.getY();
             return mMoreSuggestionsSlidingDetector.onTouchEvent(me);
         }
         if (mMoreSuggestionsView.isInModalMode()) {
@@ -368,8 +384,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 
         final int action = me.getAction();
         final int index = me.getActionIndex();
-        final int x = (int)me.getX(index);
-        final int y = (int)me.getY(index);
+        final int x = (int) me.getX(index);
+        final int y = (int) me.getY(index);
         if (Math.abs(x - mOriginX) >= mMoreSuggestionsModalTolerance
                 || mOriginY - y >= mMoreSuggestionsModalTolerance) {
             // Decided to be in the sliding suggestion mode only when the touch point has been moved
@@ -404,8 +420,8 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
         // In the sliding input mode. {@link MotionEvent} should be forwarded to
         // {@link MoreSuggestionsView}.
         final int index = me.getActionIndex();
-        final int x = mMoreSuggestionsView.translateX((int)me.getX(index));
-        final int y = mMoreSuggestionsView.translateY((int)me.getY(index));
+        final int x = mMoreSuggestionsView.translateX((int) me.getX(index));
+        final int y = mMoreSuggestionsView.translateY((int) me.getY(index));
         me.setLocation(x, y);
         if (!mNeedsToTransformTouchEventToHoverEvent) {
             mMoreSuggestionsView.onTouchEvent(me);
@@ -450,10 +466,16 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
             mListener.showImportantNoticeContents();
             return;
         }
+//        if (view == mVoiceKey) {
+//            mListener.onCodeInput(Constants.CODE_SHORTCUT,
+//                    Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
+//                    false /* isKeyRepeat */);
+//            return;
+//        }
+
         if (view == mVoiceKey) {
-            mListener.onCodeInput(Constants.CODE_SHORTCUT,
-                    Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE,
-                    false /* isKeyRepeat */);
+            mListener.onCodeInput(Constants.CODE_SPEAK_TO_TRANSLATE, Constants.SUGGESTION_STRIP_COORDINATE, Constants.SUGGESTION_STRIP_COORDINATE, false /* isKeyRepeat */);
+
             return;
         }
 
