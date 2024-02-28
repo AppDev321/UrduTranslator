@@ -2073,7 +2073,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             speechRecognizer.setRecognitionListener(new RecognitionListener() {
                 @Override
                 public void onReadyForSpeech(Bundle params) {
-
+                    mSuggestionStripView.isListening(true);
                 }
 
                 @Override
@@ -2098,7 +2098,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
 
                 @Override
                 public void onError(int error) {
-
+                    mSuggestionStripView.isListening(false);
                 }
 
                 @Override
@@ -2106,6 +2106,8 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                     String spokenText = (String) results.getStringArrayList("results_recognition").get(0);
 
                     mInputLogic.mConnection.commitText(spokenText + " ", 1);
+
+                    mSuggestionStripView.isListening(false);
 
                 }
 

@@ -202,13 +202,11 @@ public final class SuggestionStripView extends RelativeLayout implements OnClick
 //        mVoiceKey.setVisibility(currentSettingsValues.mShowsVoiceInputKey ? VISIBLE : INVISIBLE);
     }
 
-    public void updateRecognizerProgressVisibility(final boolean shouldBeVisible) {
-        final int visibility = shouldBeVisible ? VISIBLE : GONE;
-
-        if (visibility == VISIBLE) {
-            mVoiceKey.setEnabled(false);
+    public void isListening(boolean islistening) {
+        if (islistening) {
+            mVoiceKey.setBackground(getResources().getDrawable(R.drawable.mic_bg_listening));
         } else {
-            mVoiceKey.setEnabled(true);
+            mVoiceKey.setBackground(getResources().getDrawable(R.drawable.mic_bg_white));
         }
     }
 
