@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/dic_app_name"
+                android:text="@string/dic_splash_app_name"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold" />

@@ -1,6 +1,7 @@
 package com.dictionary.fragment
 
 import android.os.Bundle
+import android.util.LayoutDirection
 import android.view.View
 import android.widget.RadioButton
 import androidx.fragment.app.viewModels
@@ -52,6 +53,19 @@ class DictionaryFragment :
             isEnglishDic = selectedText == "English"
             dictionaryAdapter.languageChanged(isEnglishDic)
             dictionaryAdapter.setItems(dicDataList)
+            dictionaryAdapter.originList = dictionaryAdapter.getItems()
+            viewDataBinding.edSearchBar.apply {
+                if(isEnglishDic.not())
+                {
+                    this.layoutDirection = View.LAYOUT_DIRECTION_RTL
+                    this.hint = "تلاش کریں"
+                }
+                else{
+                    this.layoutDirection = View.LAYOUT_DIRECTION_LTR
+                    this.hint = "Search"
+                }
+            }
+
 
         }
 

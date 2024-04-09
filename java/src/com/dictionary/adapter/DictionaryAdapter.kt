@@ -66,9 +66,15 @@ class DictionaryAdapter(
 
     private fun getFilteredResults(constraint: String): List<DictionaryEntity> {
         val results: MutableList<DictionaryEntity> = arrayListOf()
-        originList.forEach {
-            if (it.meaning?.lowercase()!!.contains(constraint)) {
-                results.add(it)
+        originList.forEach { entry ->
+            val matchesConstraint = if (isEnglishDictionaryData) {
+                entry.meaning?.lowercase()?.contains(constraint) ?: false
+            } else {
+                entry.word?.lowercase()?.contains(constraint) ?: false
+            }
+
+            if (matchesConstraint) {
+                results.add(entry)
             }
         }
         return results

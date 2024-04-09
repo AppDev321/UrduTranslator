@@ -23,9 +23,10 @@ class DictionaryRepoImpl @Inject constructor(
     }
 
     override suspend fun getDictionaryRandomWord(): List<String> {
+        val data = dictionaryDao.getRandomWord()
         return arrayListOf(
-            dictionaryDao.getRandomWord().meaning.safeGet(),
-            dictionaryDao.getRandomWord().word.safeGet(),
+            data.meaning.safeGet(),
+            data.word.safeGet(),
         )
     }
 

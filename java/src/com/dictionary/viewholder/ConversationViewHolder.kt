@@ -38,6 +38,7 @@ open class ConversationViewHolder(
         val containerAction = itemView.findViewById<LinearLayout>(R.id.viewAction)
         val btnSpeaker = itemView.findViewById<ImageView>(R.id.imgSpeaker)
         val btnCopy = itemView.findViewById<ImageView>(R.id.imgCopy)
+        val btnShare = itemView.findViewById<ImageView>(R.id.imgShare)
 
         containerAction.hide()
 
@@ -56,6 +57,9 @@ open class ConversationViewHolder(
         }
         btnCopy.setOnSingleClickListener {
             event.invoke(ConversationClickEvent.CopyClick(item))
+        }
+        btnShare.setOnSingleClickListener {
+            event.invoke(ConversationClickEvent.ShareClick(item))
         }
     }
 

@@ -131,6 +131,11 @@ class TranslateFragment :
 
             btnTranslate.setOnSingleClickListener {
                 activity?.hideKeyboard()
+
+                hTranslationLayout.commonActionViews.apply {
+                    btnCommonFav.setImageResource(R.drawable.ic_fav_uncheck)
+                }
+
                 val word = edTranslate.text.toString().trim()
                 if (word.isNotEmpty()) {
                     translatedView.show()
@@ -165,6 +170,10 @@ class TranslateFragment :
                         edTranslate.setText(text)
                     }
                 }
+                btnCommonCopy.setOnSingleClickListener {
+                    context?.copyTextToClipboard(hTranslationLayout.txtTranslation.text.toString())
+                }
+
                 btnCommonSpeaker.setOnSingleClickListener {
                     setTextToSpeak(
                         hTranslationLayout.txtTranslation.text.toString(),

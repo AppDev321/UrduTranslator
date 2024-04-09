@@ -6,10 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.inputmethod.latin.R
@@ -165,7 +162,7 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
             activity?.let {
                 checkListOfPermission(
                     it,
-                    listOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE)
+                    listOf(Manifest.permission.RECORD_AUDIO)
                 )
             }
         }

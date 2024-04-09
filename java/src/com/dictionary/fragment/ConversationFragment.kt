@@ -20,6 +20,7 @@ import com.core.database.entity.ConversationEntity
 import com.core.database.entity.HistoryEntity
 import com.core.extensions.copyTextToClipboard
 import com.core.extensions.safeGet
+import com.core.extensions.sendShareIntent
 import com.core.utils.setOnSingleClickListener
 import com.dictionary.activity.DetailActivity
 import com.dictionary.adapter.ConversationAdapter
@@ -60,15 +61,19 @@ class ConversationFragment :
     private var clickEvent: (ConversationClickEvent) -> Unit = {
         when (it) {
             is ConversationClickEvent.CopyClick -> {
-                context?.copyTextToClipboard(it.data.outputText.toString())
+                context?.copyTextToClipboard(it.data.outputText.safeGet())
 
             }
 
             is ConversationClickEvent.SpeakerClick -> {
                 setTextToSpeak(
-                    it.data.outputText.toString(),
-                    Locale(it.data.outputLangCode.toString())
+                    it.data.outputText.safeGet(),
+                    Locale(it.data.outputLangCode.safeGet())
                 )
+            }
+
+            is ConversationClickEvent.ShareClick -> {
+                context?.sendShareIntent(it.data.outputText.safeGet())
             }
 
             else -> {}

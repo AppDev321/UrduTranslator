@@ -215,7 +215,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
          }
     }
 
-    fun pasteCopiedText(copiedText:(String)->Unit) {
+    fun pasteCopiedText(copiedText: (String) -> Unit) {
         val clipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         if (clipboardManager.hasPrimaryClip()) {
             val clipData: ClipData = clipboardManager.primaryClip!!

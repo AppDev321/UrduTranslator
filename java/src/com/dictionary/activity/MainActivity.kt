@@ -1,16 +1,23 @@
 package com.dictionary.activity
 
 import android.content.Intent
-import android.view.Gravity
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicActivityMainBinding
 import com.core.base.BaseActivity
 import com.core.extensions.hide
 import com.core.extensions.show
+import com.core.utils.PermissionUtilsNew
 import com.dictionary.viewmodel.DictionaryViewModel
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -23,42 +30,64 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
         dictionaryViewModel.getQuizOfTheDay()
         dictionaryViewModel.getWordOfTheDay()
 
+        if (!PermissionUtilsNew.hasNotificationPermission()) {
+            Dexter.withContext(this)
+                .withPermissions(arrayListOf(PermissionUtilsNew.getNotificationPermission()))
+                .withListener(object : MultiplePermissionsListener {
+
+                    override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                        p0?.let {
+                            if (it.isAnyPermissionPermanentlyDenied) {
+                                PermissionUtilsNew.showPermissionSettingsDialog(this@MainActivity)
+                            }
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        p0: MutableList<PermissionRequest>?,
+                        permissionToken: PermissionToken?
+                    ) {
+                        permissionToken?.continuePermissionRequest()
+                    }
+                })
+                .check()
+        }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(com.android.inputmethod.latin.R.id.activity_main_nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+    /* override fun onSupportNavigateUp(): Boolean {
+         val navHostFragment =
+             supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
+         val navController = navHostFragment.navController
 
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
+         return navController.navigateUp() || super.onSupportNavigateUp()
+     }*/
 
     override fun initUserInterface() {
 
         setSupportActionBar(viewDataBinding.toolbar)
         viewDataBinding.toolbar.title =
-            getString(com.android.inputmethod.latin.R.string.dic_app_name)
+            getString(R.string.dic_app_name)
 
         val navView = viewDataBinding.bottomNav
         val navHostFragment =
-            supportFragmentManager.findFragmentById(com.android.inputmethod.latin.R.id.activity_main_nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
         navView.setupWithNavController(navController)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         if (item.itemId == android.R.id.home) {
             val mDrawerLayout = viewDataBinding.drawerLayout
-            if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                mDrawerLayout.closeDrawer(Gravity.LEFT)
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.END)
             } else {
-                mDrawerLayout.openDrawer(Gravity.LEFT)
+                mDrawerLayout.openDrawer(GravityCompat.START)
             }
-        } else {
-            return true
         }
-        return super.onOptionsItemSelected(item)
+        return false
     }
 
     override fun onNetworkConnected() {
@@ -70,4 +99,15 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
         viewDataBinding.hNoInterNetConnection.show()
         super.onNetworkDisconnected()
     }
+
+    override fun onBackPressed() {
+        val mDrawerLayout = viewDataBinding.drawerLayout
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+
 }

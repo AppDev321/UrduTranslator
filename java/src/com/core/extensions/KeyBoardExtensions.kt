@@ -12,6 +12,8 @@ import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import com.core.base.BaseActivity
+import com.dictionary.activity.MainActivity
 
 fun Fragment.hideKeyboard() {
     view?.let { activity?.hideKeyboard(it) }
@@ -32,6 +34,7 @@ fun Activity.hideKeyboard() {
         hideKeyboard(focusedView)
     }
 }
+
 
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

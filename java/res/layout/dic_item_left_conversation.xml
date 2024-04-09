@@ -52,6 +52,14 @@
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/txtOutput">
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_share"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgCopy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

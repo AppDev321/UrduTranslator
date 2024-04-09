@@ -100,7 +100,7 @@
     <color name="transparency_20">#85000000</color>
     <color name="black">#000000</color>
     <color name="white">#fff</color>
-    <color name="primaryColor">#298340</color>
+    <color name="primaryColor">@color/colorPrimary</color>
     <color name="button_color">#e8f7f1</color>
     <color name="danger">#FB7676</color>
     <color name="button_enable">#e8f7f1</color>

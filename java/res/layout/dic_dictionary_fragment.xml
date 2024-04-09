@@ -29,7 +29,6 @@
             android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textDirection="locale"
             android:textSize="@dimen/_14sdp" />
     </androidx.cardview.widget.CardView>
 

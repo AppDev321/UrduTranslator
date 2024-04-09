@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dic_app_name">Urdu Translator</string>
+    <string name="dic_app_name">Fast Urdu English</string>
+    <string name="dic_splash_app_name">Fast Urdu English Translator</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">Home</string>
     <string name="title_conversation">Conversation</string>

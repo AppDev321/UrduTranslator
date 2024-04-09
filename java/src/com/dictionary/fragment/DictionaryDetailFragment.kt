@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.inputmethod.latin.databinding.DicDictionaryDetailBinding
 import com.core.base.BaseFragment
 import com.core.database.entity.DictionaryEntity
+import com.core.extensions.copyTextToClipboard
 import com.core.extensions.hide
+import com.core.extensions.safeGet
+import com.core.extensions.sendShareIntent
 import com.core.extensions.show
 import com.core.utils.Utils.serializable
 import com.core.utils.setOnSingleClickListener
@@ -43,24 +46,33 @@ class DictionaryDetailFragment :
                     txtEng.text = it.meaning
                     txtUrdu.text = it.word
                     txtEng.setOnSingleClickListener{view->
-                        setTextToSpeak(it.meaning.toString(), Locale("en"))
+                        setTextToSpeak(it.meaning.safeGet(), Locale("en"))
                     }
                     txtUrdu.setOnSingleClickListener{view->
-                        setTextToSpeak(it.word.toString(), Locale("ur"))
+                        setTextToSpeak(it.word.safeGet(), Locale("ur"))
                     }
                 }
                 else {
                     txtUrdu.text = it.meaning
                     txtEng.text = it.word
                     txtUrdu.setOnSingleClickListener{view->
-                        setTextToSpeak(it.meaning.toString(), Locale("en"))
+                        setTextToSpeak(it.meaning.safeGet(), Locale("en"))
                     }
                     txtEng.setOnSingleClickListener{view->
-                        setTextToSpeak(it.word.toString(), Locale("ur"))
+                        setTextToSpeak(it.word.safeGet(), Locale("ur"))
                     }
                 }
 
+                txtCopy.setOnSingleClickListener{view->
+                    context?.copyTextToClipboard(it.meaning.safeGet() +"\n"+it.word.safeGet())
+                }
+
+                txtShare.setOnSingleClickListener{view->
+                    context?.sendShareIntent(it.meaning.safeGet() +"\n"+it.word.safeGet())
+                }
             }
+            
+            
         }
 
     }

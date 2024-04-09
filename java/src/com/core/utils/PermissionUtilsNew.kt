@@ -312,4 +312,12 @@ object PermissionUtilsNew {
         )
         return hasAudioPermission() && phoneStatePermission == PackageManager.PERMISSION_GRANTED
     }
+
+    fun checkForNotificationPermission(): Boolean {
+        return if(androidTIRAMISUAndAbove) hasNotificationPermission() else true
+    }
+
+    fun getNotificationPermission(): String {
+        return Manifest.permission.POST_NOTIFICATIONS
+    }
 }
