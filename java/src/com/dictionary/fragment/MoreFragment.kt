@@ -7,15 +7,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicMoreFragmentBinding
 import com.android.inputmethod.latin.setup.SetupActivity
 import com.core.base.BaseFragment
+import com.core.extensions.TAG
+import com.core.extensions.empty
 import com.core.extensions.showShortToast
 import com.core.interfaces.ItemClickListener
+import com.core.utils.AppLogger
 import com.core.utils.PermissionUtilsNew
+import com.core.utils.getNavigationResult
+import com.core.utils.setNavigationResult
 import com.dictionary.activity.DetailActivity
 import com.dictionary.activity.MainActivity
 import com.dictionary.adapter.SettingAdapter
@@ -43,6 +49,7 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
     lateinit var settingsDataFactory: SettingsDataFactory
 
     override fun initUserInterface(view: View?) {
+
         settingAdapter = SettingAdapter(this)
         viewDataBinding.rec.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -50,27 +57,12 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
         }
 
         settingAdapter.setItems(settingsDataFactory.getMoreFragmentData())
-    }
 
-    override fun onItemClick(position: Int, view: View) {
-        super.onItemClick(position, view)
-
-        if (position == 0) {
-           checkAudioPermission()
-        } else {
-            initBottomSheetListener()
-            findNavController().navigate(R.id.action_show_image_choose_dialog)
-        }
-
-    }
-
-
-    private fun initBottomSheetListener() {
-
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(
-            PROFILE_PHOTO_SELECTION_OPTION
-        )?.observe(viewLifecycleOwner) { selection ->
+        val result = getNavigationResult(PROFILE_PHOTO_SELECTION_OPTION)
+            result?.observe(viewLifecycleOwner) { selection->
+                AppLogger.e(TAG,selection)
             when (selection) {
+
                 ImageChooserDialog.Companion.SelectionType.GALLERY.name -> {
                     requireActivity().apply {
                         com.dictionary.utils.checkPermission(
@@ -80,9 +72,10 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
                             pickImageFromGalleryForResult
                         )
                     }
+                    setNavigationResult(PROFILE_PHOTO_SELECTION_OPTION,String.empty)
                 }
 
-                else -> {
+                ImageChooserDialog.Companion.SelectionType.CAMERA.name -> {
                     requireActivity().apply {
                         com.dictionary.utils.checkPermission(
                             this,
@@ -91,11 +84,28 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
                             takePhotoForResult
                         )
                     }
+                    setNavigationResult(PROFILE_PHOTO_SELECTION_OPTION,String.empty)
                 }
-
+                else -> Unit
             }
+
         }
+
     }
+
+    override fun onItemClick(position: Int, view: View) {
+        super.onItemClick(position, view)
+
+        if (position == 0) {
+           checkAudioPermission()
+        } else {
+
+            findNavController().navigate(R.id.action_show_image_choose_dialog)
+        }
+
+    }
+
+
 
 
     override fun onActivityResult(
@@ -145,9 +155,6 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
         bundle.putString(DetailActivity.IMAGEPATH, uri.toString())
         bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_more_to_editor)
         findNavController().navigate(R.id.action_more_to_editor, bundle)
-        findNavController().currentBackStackEntry?.savedStateHandle?.remove<String>(
-            PROFILE_PHOTO_SELECTION_OPTION
-        )
     }
 
     private fun checkAudioPermission()

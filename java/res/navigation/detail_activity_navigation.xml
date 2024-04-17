@@ -14,18 +14,12 @@
         <action
             android:id="@+id/action_zoomViewFragment_to_fragmentHome"
             app:destination="@id/fragmentTranslate"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
         <action
             android:id="@+id/action_zoomViewFragment_to_fragmentHistory"
             app:destination="@id/historyViewFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
     </fragment>
 
 
@@ -36,10 +30,7 @@
         <action
             android:id="@+id/action_HistoryViewFragment_to_fragmentHome"
             app:destination="@id/fragmentTranslate"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
         <argument
             android:name="isFav"
             android:defaultValue="false"
@@ -48,10 +39,7 @@
         <action
             android:id="@+id/action_fragmentHome_to_zoomViewFragment"
             app:destination="@id/zoomViewFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
     </fragment>
 
 
@@ -91,10 +79,7 @@
         <action
             android:id="@+id/action_sub_to_detail"
             app:destination="@id/learDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
     </fragment>
 
     <fragment
@@ -105,10 +90,7 @@
        <!-- <action
             android:id="@+id/action_detail_to_sub"
             app:destination="@id/learDetailFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />-->
+             />-->
 
     </fragment>
 

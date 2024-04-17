@@ -3,6 +3,10 @@ package com.core.utils
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.findNavController
@@ -36,7 +40,10 @@ fun Fragment.mayNavigate(destinationIdOfThisFragment: Int): Boolean {
 fun Fragment.getNavigationResult(key: String) =
     findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(key)
 
+
 fun Fragment.setNavigationResult(key: String, value: String) {
     findNavController().previousBackStackEntry?.savedStateHandle?.set(key, value)
 }
+
+
 

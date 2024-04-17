@@ -11,7 +11,9 @@ import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicDictionaryFragmentBinding
 import com.core.base.BaseFragment
 import com.core.database.entity.DictionaryEntity
+import com.core.extensions.TAG
 import com.core.interfaces.ItemClickListener
+import com.core.utils.AppLogger
 import com.core.utils.setOnSingleClickListener
 import com.dictionary.activity.DetailActivity
 import com.dictionary.adapter.DictionaryAdapter
@@ -80,24 +82,6 @@ class DictionaryFragment :
             bundle.putInt(DetailActivity.DEFAULT_NAV_HOST_KEY, R.id.action_dic_to_word)
             findNavController().navigate(R.id.action_dic_to_word, bundle)
         }
-
-        viewDataBinding.edSearchBar.addTextChangedListener(
-            TextQueryListenerManager(
-                this.activity?.lifecycle
-            ) { queryText ->
-                queryText?.let {
-                    dictionaryAdapter.filter.filter(it)
-                    if (it.isEmpty()) {
-
-                        //    setAdapter(countrySelectFragmentViewModel.getTotalCountryList())
-                    } else {
-                        //   countrySelectFragmentViewModel.searchCountry(queryText.trim())
-                    }
-                }
-            }
-        )
-
-
     }
 
     override fun setProgressVisibility(visibility: Int) {
@@ -114,6 +98,17 @@ class DictionaryFragment :
         dictionaryAdapter.setItems(ArrayList(item))
         dictionaryAdapter.originList = dictionaryAdapter.getItems()
         dicDataList = dictionaryAdapter.getItems()
+        if(isAdded) {
+            viewDataBinding.edSearchBar.addTextChangedListener(
+                TextQueryListenerManager(
+                    lifecycle
+                ) { queryText ->
+                    queryText?.let {
+                        dictionaryAdapter.filter.filter(it)
+                    }
+                }
+            )
+        }
     }
 
     override fun onItemClick(position: Int, view: View) {

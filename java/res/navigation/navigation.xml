@@ -20,63 +20,42 @@
         <action
             android:id="@+id/action_fragmentHome_to_conversationFragment"
             app:destination="@id/dictionaryFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
 
         <action
             android:id="@+id/action_fragmentHome_to_zoomViewFragment"
             app:destination="@id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
         <action
             android:id="@+id/action_fragmentHome_to_detailScreen"
             app:destination="@id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
         <action
             android:id="@+id/action_conversation_to_home"
             app:destination="@id/conversationFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            
             app:popUpTo="@id/fragmentTranslate" />
 
 
         <action
             android:id="@+id/action_dictionary_to_home"
             app:destination="@id/fragmentTranslate"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            
             app:popUpTo="@id/fragmentTranslate" />
 
         <action
             android:id="@+id/action_move_to_language_dialog"
             app:destination="@id/selectLanguageBottomSheetDialog"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
 
         <action
             android:id="@+id/action_move_to_language_select"
             app:destination="@+id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
     </fragment>
 
@@ -88,18 +67,12 @@
         <action
             android:id="@+id/action_move_to_language_dialog"
             app:destination="@id/selectLanguageBottomSheetDialog"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
         <action
             android:id="@+id/action_move_to_language_select"
             app:destination="@+id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
     </fragment>
 
 
@@ -112,26 +85,17 @@
         <action
             android:id="@+id/action_dic_to_detail_dic"
             app:destination="@id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
         <action
             android:id="@+id/action_dic_to_quiz"
             app:destination="@+id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
         <action
             android:id="@+id/action_dic_to_word"
             app:destination="@+id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
     </fragment>
 
@@ -144,10 +108,7 @@
         <action
             android:id="@+id/action_learn_to_detail"
             app:destination="@id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
     </fragment>
 
@@ -159,10 +120,7 @@
         <action
             android:id="@+id/action_more_to_editor"
             app:destination="@+id/detail_activity"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+             />
 
 
         <action
