@@ -26,6 +26,7 @@ class PreferenceManager constructor(val context: Context) {
         private const val PREF_TO_LANG_TEXT = "to_code_lang_text"
         private const val PREF_QUIZ_OF_THE_DAY = "quiz_of_the_day"
         private const val PREF_WORD_OF_THE_DAY = "word_of_the_day"
+        private const val PREF_NOTIFICATION = "notification_settings"
     }
     // endregion
 
@@ -44,8 +45,16 @@ class PreferenceManager constructor(val context: Context) {
         return sharedPreferences.getBoolean(key, true)
     }
 
-    private fun getBooleanPolicy(key: String, defaultValue: Boolean): Boolean {
+     fun getBooleanPolicy(key: String, defaultValue: Boolean): Boolean {
         return sharedPreferences.getBoolean(key, defaultValue)
+    }
+
+     fun setNotificationPolicy(value: Boolean) {
+        sharedPreferences.edit().putBoolean(PREF_NOTIFICATION, value).apply()
+    }
+
+     fun getNotificationPolicy(): Boolean {
+        return sharedPreferences.getBoolean(PREF_NOTIFICATION, true)
     }
 
 
@@ -108,6 +117,8 @@ class PreferenceManager constructor(val context: Context) {
     {
         return getWordOfTheDay() != null
     }
+
+
 
 
 }

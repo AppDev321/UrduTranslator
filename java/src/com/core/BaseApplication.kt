@@ -42,16 +42,17 @@ class BaseApplication : Application() , androidx.lifecycle.DefaultLifecycleObser
         AppLogger.initializeLogging(
             this, FileUtils.getLogsPath(), preferenceManager.isApplicationLogsEnabled()
         )
+        if (preferenceManager.getNotificationPolicy()) {
+            createQuizWorkerService()
+            createWordWorkerService()
 
-        createQuizWorkerService()
-        createWordWorkerService()
-
-        val selectedInterval = AlarmSetter.BackupAlarmInterval.getInternalByOrdinal(0)
-        val nextBackupTime = AlarmSetter.BackupAlarmInterval.EVENING.interval
-        AlarmSetter.setAlarmWithInterval(
-           this,
-            selectedInterval, nextBackupTime
-        )
+            val selectedInterval = AlarmSetter.BackupAlarmInterval.getInternalByOrdinal(0)
+            val nextBackupTime = AlarmSetter.BackupAlarmInterval.EVENING.interval
+            AlarmSetter.setAlarmWithInterval(
+                this,
+                selectedInterval, nextBackupTime
+            )
+        }
 
        /* val alarmScheduler: AlarmScheduler = AlarmSchedulerImpl(this)
         val alarmItem=  AlarmItem(
@@ -188,8 +189,10 @@ class BaseApplication : Application() , androidx.lifecycle.DefaultLifecycleObser
     }
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        createQuizWorkerService()
-        createWordWorkerService()
+        if (preferenceManager.getNotificationPolicy()) {
+            createQuizWorkerService()
+            createWordWorkerService()
+        }
         AppLogger.e(TAG, "************* backgrounded")
     }
 

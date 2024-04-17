@@ -9,21 +9,33 @@ import androidx.navigation.ui.setupWithNavController
 import com.android.inputmethod.latin.R
 import com.android.inputmethod.latin.databinding.DicActivityMainBinding
 import com.core.base.BaseActivity
+import com.core.extensions.TAG
 import com.core.extensions.hide
 import com.core.extensions.show
+import com.core.utils.AppLogger
+import com.core.utils.DialogManager
 import com.core.utils.PermissionUtilsNew
+import com.core.utils.PreferenceManager
 import com.dictionary.viewmodel.DictionaryViewModel
+import com.google.android.material.navigation.NavigationView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding::inflate) {
+class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding::inflate),
+    NavigationView.OnNavigationItemSelectedListener {
     private val dictionaryViewModel: DictionaryViewModel by viewModels()
+
+    @Inject
+    lateinit var dialogManager: DialogManager
+    @Inject
+    lateinit var preferenceManager: PreferenceManager
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -75,6 +87,9 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
 
         navView.setupWithNavController(navController)
 
+
+        viewDataBinding.navView.setNavigationItemSelectedListener(this)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -107,6 +122,33 @@ class MainActivity : BaseActivity<DicActivityMainBinding>(DicActivityMainBinding
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.notification -> {
+
+                dialogManager.singleChoiceListItemDialog(
+                    this,
+                    "",
+                    "Notification",
+                    arrayOf("On","Off"),
+                    if (preferenceManager.getNotificationPolicy()) 0 else 1 ,
+                    alertDialogListener= object: DialogManager.TypeAlertDialogItemClickListener{
+                        override fun onItemTypeClicked(which: Int, type: String) {
+                            preferenceManager.setNotificationPolicy(which == 0)
+                        }
+                    }
+                )
+                val mDrawerLayout = viewDataBinding.drawerLayout
+                mDrawerLayout.closeDrawers()
+            }
+
+            else -> return false
+        }
+
+        return true
     }
 
 
