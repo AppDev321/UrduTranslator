@@ -62,7 +62,6 @@ class MoreFragment : BaseFragment<DicMoreFragmentBinding>(DicMoreFragmentBinding
             findNavController().navigate(R.id.action_show_image_choose_dialog)
         }
 
-
     }
 
 
